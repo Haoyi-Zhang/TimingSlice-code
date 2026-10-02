@@ -1,0 +1,128 @@
+{
+  "done": [
+    "eq",
+    [
+      "var",
+      "count"
+    ],
+    [
+      "const",
+      4,
+      3
+    ]
+  ],
+  "horizon": 3,
+  "id": "asic-tutorial-counter-4",
+  "inputs": [
+    {
+      "name": "reset",
+      "values": [
+        0,
+        1
+      ],
+      "width": 1
+    },
+    {
+      "name": "enable",
+      "values": [
+        0,
+        1
+      ],
+      "width": 1
+    }
+  ],
+  "registers": [
+    {
+      "cut": true,
+      "init": 0,
+      "name": "count",
+      "next": [
+        "mux",
+        [
+          "and",
+          [
+            "and",
+            [
+              "const",
+              1,
+              1
+            ],
+            [
+              "not",
+              [
+                "eq",
+                [
+                  "var",
+                  "reset"
+                ],
+                [
+                  "const",
+                  1,
+                  1
+                ]
+              ]
+            ]
+          ],
+          [
+            "eq",
+            [
+              "var",
+              "enable"
+            ],
+            [
+              "const",
+              1,
+              1
+            ]
+          ]
+        ],
+        [
+          "add",
+          [
+            "var",
+            "count"
+          ],
+          [
+            "const",
+            4,
+            1
+          ]
+        ],
+        [
+          "mux",
+          [
+            "and",
+            [
+              "const",
+              1,
+              1
+            ],
+            [
+              "eq",
+              [
+                "var",
+                "reset"
+              ],
+              [
+                "const",
+                1,
+                1
+              ]
+            ]
+          ],
+          [
+            "const",
+            4,
+            0
+          ],
+          [
+            "var",
+            "count"
+          ]
+        ]
+      ],
+      "width": 4
+    }
+  ],
+  "wires": []
+}

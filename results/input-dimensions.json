@@ -1,0 +1,16 @@
+{
+  "base_models": 109,
+  "maxima": {
+    "cuttable_bits": 5,
+    "cuttable_equations": 4,
+    "expression_nodes": 80,
+    "horizon": 4,
+    "input_combinations": 4,
+    "input_ports": 2,
+    "max_word_width": 2,
+    "register_bits": 5,
+    "registers": 3,
+    "state_combinations": 32,
+    "wires": 4
+  }
+}

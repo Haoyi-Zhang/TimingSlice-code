@@ -1,0 +1,14 @@
+{
+  "address_space_limit_bytes": 1073741824,
+  "child_system_cpu_seconds": 0.055597999999999995,
+  "child_user_cpu_seconds": 0.9138529999999999,
+  "command": "python3 -m src.checker cases/post-completion.json results/clean-reproduction/example.json --limit 100000",
+  "cpu_limit_seconds": 90,
+  "exit_code": 0,
+  "peak_rss_kib": 92720,
+  "stderr": "",
+  "stdout": "{\"accepted\": true, \"claim\": \"inclusion-minimal\", \"work\": {\"limit\": 100000, \"observations\": 198, \"successors\": 337}}\n",
+  "wall_limit_seconds": 118,
+  "wall_seconds": 0.5773531970000931,
+  "worker_processes": 1
+}

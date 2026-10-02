@@ -1,0 +1,24 @@
+{
+  "boundary": "static closure audit only; mathematical and semantic claims rely on retained runs",
+  "core_fixture_files": 109,
+  "core_retained_summary_verified": {
+    "canonical_control_witnesses_checked": 35,
+    "closed_form_transition_pairs": 5401,
+    "invalid_mutations_rejected": 16,
+    "operator_value_checks": 2410,
+    "reduction_subset_queries": 928,
+    "unique_generated_models": 109,
+    "unknown_budget_controls": 2
+  },
+  "final_cumulative_semantic_work": 150022,
+  "post_fix_targeted_semantic_units": 21,
+  "post_fix_targeted_test_methods": 5,
+  "public_manifest_rows": 10,
+  "public_retained_bundles": 4,
+  "public_translation_rows": 10,
+  "scientific_search_repeated": false,
+  "semantic_work_overrun": 22,
+  "software_regression_semantic_units": 102,
+  "software_regression_tests": 19,
+  "status": "PASS"
+}

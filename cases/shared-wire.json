@@ -1,0 +1,37 @@
+{
+  "done": [
+    "xor",
+    [
+      "var",
+      "a"
+    ],
+    [
+      "var",
+      "a"
+    ]
+  ],
+  "horizon": 2,
+  "id": "shared-wire",
+  "inputs": [
+    {
+      "name": "x",
+      "values": [
+        0,
+        1
+      ],
+      "width": 1
+    }
+  ],
+  "registers": [],
+  "wires": [
+    {
+      "cut": true,
+      "expr": [
+        "var",
+        "x"
+      ],
+      "name": "a",
+      "width": 1
+    }
+  ]
+}

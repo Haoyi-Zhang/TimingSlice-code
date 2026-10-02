@@ -1,0 +1,56 @@
+{
+  "done": [
+    "and",
+    [
+      "var",
+      "a"
+    ],
+    [
+      "or",
+      [
+        "var",
+        "b"
+      ],
+      [
+        "var",
+        "c"
+      ]
+    ]
+  ],
+  "horizon": 0,
+  "id": "minimum-gap",
+  "inputs": [],
+  "registers": [],
+  "wires": [
+    {
+      "cut": true,
+      "expr": [
+        "const",
+        1,
+        0
+      ],
+      "name": "a",
+      "width": 1
+    },
+    {
+      "cut": true,
+      "expr": [
+        "const",
+        1,
+        0
+      ],
+      "name": "b",
+      "width": 1
+    },
+    {
+      "cut": true,
+      "expr": [
+        "const",
+        1,
+        0
+      ],
+      "name": "c",
+      "width": 1
+    }
+  ]
+}

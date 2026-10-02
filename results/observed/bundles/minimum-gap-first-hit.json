@@ -1,0 +1,120 @@
+{
+  "attempts": [
+    {
+      "equation": "w:a",
+      "status": "valid"
+    },
+    {
+      "equation": "w:b",
+      "status": "invalid"
+    },
+    {
+      "equation": "w:c",
+      "status": "invalid"
+    }
+  ],
+  "model_id": "minimum-gap",
+  "necessities": [
+    {
+      "equation": "w:b",
+      "witness": {
+        "cuts": [
+          {
+            "w:a": 1,
+            "w:b": 1
+          }
+        ],
+        "horizon": 0,
+        "inputs": [
+          []
+        ],
+        "kind": "counterexample",
+        "observation": "first-hit",
+        "predecessors": {
+          "frontiers": [
+            [
+              [
+                [],
+                [],
+                0,
+                0
+              ]
+            ]
+          ]
+        },
+        "retained": [
+          "w:c"
+        ],
+        "time": 0
+      }
+    },
+    {
+      "equation": "w:c",
+      "witness": {
+        "cuts": [
+          {
+            "w:a": 1,
+            "w:c": 1
+          }
+        ],
+        "horizon": 0,
+        "inputs": [
+          []
+        ],
+        "kind": "counterexample",
+        "observation": "first-hit",
+        "predecessors": {
+          "frontiers": [
+            [
+              [
+                [],
+                [],
+                0,
+                0
+              ]
+            ]
+          ]
+        },
+        "retained": [
+          "w:b"
+        ],
+        "time": 0
+      }
+    }
+  ],
+  "preservation": {
+    "frontiers": [
+      [
+        [
+          [],
+          []
+        ]
+      ]
+    ],
+    "horizon": 0,
+    "kind": "preservation",
+    "observation": "first-hit",
+    "retained": [
+      "w:b",
+      "w:c"
+    ]
+  },
+  "status": "inclusion-minimal",
+  "timing_model": {
+    "done": [
+      "const",
+      1,
+      0
+    ],
+    "horizon": 0,
+    "id": "minimum-gap-timing",
+    "inputs": [],
+    "registers": [],
+    "wires": []
+  },
+  "work": {
+    "limit": 100000,
+    "observations": 28,
+    "successors": 0
+  }
+}

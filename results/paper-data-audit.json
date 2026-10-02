@@ -1,0 +1,18 @@
+{
+  "bibliography_entries_reconciled": 56,
+  "campaign_accounting_text_reconciled": true,
+  "certificate_controls": {
+    "invalid_rejected": 16,
+    "sound_superset_accepted": 1,
+    "unknown_budget_controls": 2
+  },
+  "control_table_rows_checked": 13,
+  "figure_3_points_checked": 15,
+  "public_rtl_rows_checked": 10,
+  "public_rtl_totals": {
+    "samples": 4965,
+    "traces": 1377
+  },
+  "scientific_search_repeated": false,
+  "status": "PASS"
+}

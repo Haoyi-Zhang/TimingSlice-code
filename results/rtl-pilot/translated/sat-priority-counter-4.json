@@ -1,0 +1,188 @@
+{
+  "done": [
+    "eq",
+    [
+      "var",
+      "counter"
+    ],
+    [
+      "const",
+      4,
+      3
+    ]
+  ],
+  "horizon": 4,
+  "id": "sat-priority-counter-4",
+  "inputs": [
+    {
+      "name": "rst",
+      "values": [
+        0,
+        1
+      ],
+      "width": 1
+    }
+  ],
+  "registers": [
+    {
+      "cut": true,
+      "init": 0,
+      "name": "counter",
+      "next": [
+        "mux",
+        [
+          "and",
+          [
+            "const",
+            1,
+            1
+          ],
+          [
+            "not",
+            [
+              "or",
+              [
+                "const",
+                1,
+                0
+              ],
+              [
+                "or",
+                [
+                  "eq",
+                  [
+                    "const",
+                    1,
+                    1
+                  ],
+                  [
+                    "var",
+                    "rst"
+                  ]
+                ],
+                [
+                  "eq",
+                  [
+                    "const",
+                    1,
+                    1
+                  ],
+                  [
+                    "eq",
+                    [
+                      "var",
+                      "counter"
+                    ],
+                    [
+                      "const",
+                      4,
+                      9
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        [
+          "add",
+          [
+            "var",
+            "counter"
+          ],
+          [
+            "const",
+            4,
+            1
+          ]
+        ],
+        [
+          "mux",
+          [
+            "and",
+            [
+              "const",
+              1,
+              1
+            ],
+            [
+              "and",
+              [
+                "or",
+                [
+                  "eq",
+                  [
+                    "const",
+                    1,
+                    1
+                  ],
+                  [
+                    "var",
+                    "rst"
+                  ]
+                ],
+                [
+                  "eq",
+                  [
+                    "const",
+                    1,
+                    1
+                  ],
+                  [
+                    "eq",
+                    [
+                      "var",
+                      "counter"
+                    ],
+                    [
+                      "const",
+                      4,
+                      9
+                    ]
+                  ]
+                ]
+              ],
+              [
+                "not",
+                [
+                  "const",
+                  1,
+                  0
+                ]
+              ]
+            ]
+          ],
+          [
+            "const",
+            4,
+            0
+          ],
+          [
+            "var",
+            "counter"
+          ]
+        ]
+      ],
+      "width": 4
+    }
+  ],
+  "wires": [
+    {
+      "cut": false,
+      "expr": [
+        "eq",
+        [
+          "var",
+          "counter"
+        ],
+        [
+          "const",
+          4,
+          12
+        ]
+      ],
+      "name": "y",
+      "width": 1
+    }
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "attempts": [
+    {
+      "equation": "r:q",
+      "status": "valid"
+    }
+  ],
+  "model_id": "never-complete",
+  "necessities": [],
+  "preservation": {
+    "frontiers": [
+      [
+        [
+          [
+            0
+          ],
+          [
+            0
+          ]
+        ]
+      ],
+      [
+        [
+          [
+            1
+          ],
+          [
+            0
+          ]
+        ],
+        [
+          [
+            1
+          ],
+          [
+            1
+          ]
+        ]
+      ],
+      [
+        [
+          [
+            0
+          ],
+          [
+            0
+          ]
+        ],
+        [
+          [
+            0
+          ],
+          [
+            1
+          ]
+        ]
+      ],
+      [
+        [
+          [
+            1
+          ],
+          [
+            0
+          ]
+        ],
+        [
+          [
+            1
+          ],
+          [
+            1
+          ]
+        ]
+      ]
+    ],
+    "horizon": 3,
+    "kind": "preservation",
+    "observation": "first-hit",
+    "retained": []
+  },
+  "status": "inclusion-minimal",
+  "timing_model": {
+    "done": [
+      "const",
+      1,
+      0
+    ],
+    "horizon": 3,
+    "id": "never-complete-timing",
+    "inputs": [],
+    "registers": [],
+    "wires": []
+  },
+  "work": {
+    "limit": 100000,
+    "observations": 14,
+    "successors": 20
+  }
+}

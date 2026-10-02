@@ -1,0 +1,6 @@
+test_no_nested_archive_is_shipped (tests.test_artifact.ArtifactClosureTests.test_no_nested_archive_is_shipped) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK

@@ -1,0 +1,119 @@
+{
+  "attempts": [
+    {
+      "equation": "w:w",
+      "status": "invalid"
+    }
+  ],
+  "model_id": "wire-width",
+  "necessities": [
+    {
+      "equation": "w:w",
+      "witness": {
+        "cuts": [
+          {
+            "w:w": 0
+          }
+        ],
+        "horizon": 1,
+        "inputs": [
+          [
+            0
+          ]
+        ],
+        "kind": "counterexample",
+        "observation": "waveform",
+        "predecessors": {
+          "frontiers": [
+            [
+              [
+                [],
+                [],
+                0,
+                0
+              ]
+            ]
+          ]
+        },
+        "retained": [],
+        "time": 0
+      }
+    }
+  ],
+  "preservation": {
+    "frontiers": [
+      [
+        [
+          [],
+          []
+        ]
+      ],
+      [
+        [
+          [],
+          []
+        ]
+      ]
+    ],
+    "horizon": 1,
+    "kind": "preservation",
+    "observation": "waveform",
+    "retained": [
+      "w:w"
+    ]
+  },
+  "status": "inclusion-minimal",
+  "timing_model": {
+    "done": [
+      "eq",
+      [
+        "var",
+        "w"
+      ],
+      [
+        "const",
+        2,
+        0
+      ]
+    ],
+    "horizon": 1,
+    "id": "wire-width-timing",
+    "inputs": [
+      {
+        "name": "x",
+        "values": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "width": 2
+      }
+    ],
+    "registers": [],
+    "wires": [
+      {
+        "cut": false,
+        "expr": [
+          "add",
+          [
+            "var",
+            "x"
+          ],
+          [
+            "const",
+            2,
+            1
+          ]
+        ],
+        "name": "w",
+        "width": 2
+      }
+    ]
+  },
+  "work": {
+    "limit": 100000,
+    "observations": 56,
+    "successors": 24
+  }
+}

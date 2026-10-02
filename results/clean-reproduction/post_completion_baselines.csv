@@ -1,0 +1,4 @@
+configuration,retained,frontier_entries,preservation_obligations
+unsliced-first-hit,3,5,16
+sliced-first-hit,1,33,338
+sliced-waveform,3,9,32

@@ -1,0 +1,88 @@
+{
+  "done": [
+    "eq",
+    [
+      "var",
+      "q"
+    ],
+    [
+      "const",
+      2,
+      2
+    ]
+  ],
+  "horizon": 3,
+  "id": "reset-counter",
+  "inputs": [
+    {
+      "name": "reset",
+      "values": [
+        0,
+        1
+      ],
+      "width": 1
+    },
+    {
+      "name": "enable",
+      "values": [
+        0,
+        1
+      ],
+      "width": 1
+    }
+  ],
+  "registers": [
+    {
+      "cut": true,
+      "init": 0,
+      "name": "q",
+      "next": [
+        "mux",
+        [
+          "var",
+          "rst"
+        ],
+        [
+          "const",
+          2,
+          0
+        ],
+        [
+          "mux",
+          [
+            "var",
+            "enable"
+          ],
+          [
+            "add",
+            [
+              "var",
+              "q"
+            ],
+            [
+              "const",
+              2,
+              1
+            ]
+          ],
+          [
+            "var",
+            "q"
+          ]
+        ]
+      ],
+      "width": 2
+    }
+  ],
+  "wires": [
+    {
+      "cut": true,
+      "expr": [
+        "var",
+        "reset"
+      ],
+      "name": "rst",
+      "width": 1
+    }
+  ]
+}

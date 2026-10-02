@@ -1,0 +1,39 @@
+{
+  "done": [
+    "xor",
+    [
+      "var",
+      "a"
+    ],
+    [
+      "var",
+      "b"
+    ]
+  ],
+  "horizon": 0,
+  "id": "zero-cancellation",
+  "inputs": [],
+  "registers": [],
+  "wires": [
+    {
+      "cut": true,
+      "expr": [
+        "const",
+        1,
+        1
+      ],
+      "name": "a",
+      "width": 1
+    },
+    {
+      "cut": true,
+      "expr": [
+        "const",
+        1,
+        1
+      ],
+      "name": "b",
+      "width": 1
+    }
+  ]
+}

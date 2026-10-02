@@ -1,0 +1,9 @@
+{
+  "command": "python3 rtl-pilot.py --out results/clean-rtl-replay --mode replay --bundle-dir results/rtl-pilot/bundles",
+  "cpu_seconds": 0.03940514100000003,
+  "exit_code": 0,
+  "failure": null,
+  "peak_rss_kib": 94636,
+  "wall_seconds": 0.04000534500005415,
+  "worker_processes": 1
+}

@@ -1,0 +1,69 @@
+{
+  "attempts": [
+    {
+      "equation": "r:q",
+      "status": "valid"
+    }
+  ],
+  "model_id": "initial-completion",
+  "necessities": [],
+  "preservation": {
+    "frontiers": [
+      [
+        [
+          [
+            1
+          ],
+          [
+            1
+          ]
+        ]
+      ],
+      [],
+      [],
+      []
+    ],
+    "horizon": 3,
+    "kind": "preservation",
+    "observation": "first-hit",
+    "retained": []
+  },
+  "status": "inclusion-minimal",
+  "timing_model": {
+    "done": [
+      "var",
+      "q"
+    ],
+    "horizon": 3,
+    "id": "initial-completion-timing",
+    "inputs": [
+      {
+        "name": "x",
+        "values": [
+          0,
+          1
+        ],
+        "width": 1
+      }
+    ],
+    "registers": [
+      {
+        "cut": false,
+        "init": 1,
+        "name": "q",
+        "next": [
+          "const",
+          1,
+          0
+        ],
+        "width": 1
+      }
+    ],
+    "wires": []
+  },
+  "work": {
+    "limit": 100000,
+    "observations": 4,
+    "successors": 0
+  }
+}

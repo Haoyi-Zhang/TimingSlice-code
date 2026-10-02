@@ -1,0 +1,41 @@
+{
+  "done": [
+    "var",
+    "b"
+  ],
+  "horizon": 3,
+  "id": "old-value-pipeline",
+  "inputs": [
+    {
+      "name": "go",
+      "values": [
+        0,
+        1
+      ],
+      "width": 1
+    }
+  ],
+  "registers": [
+    {
+      "cut": true,
+      "init": 0,
+      "name": "a",
+      "next": [
+        "var",
+        "go"
+      ],
+      "width": 1
+    },
+    {
+      "cut": true,
+      "init": 0,
+      "name": "b",
+      "next": [
+        "var",
+        "a"
+      ],
+      "width": 1
+    }
+  ],
+  "wires": []
+}

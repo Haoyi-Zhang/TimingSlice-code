@@ -1,0 +1,9 @@
+case,mutation,independent_validator_rejected,reason
+cmos-counter-3,wrong-source-blob-binding,True,source blob does not match pinned provenance
+cmos-counter-3,changed-source-bytes,True,source blob does not match pinned provenance
+cmos-counter-3,wrong-horizon,True,model identity or horizon mismatch
+cmos-counter-3,wrong-input-domain,True,translated input declarations differ
+cmos-counter-3,wrong-initial-state,True,next-state equation mismatch
+cmos-counter-3,wrong-cut-policy,True,next-state equation mismatch
+cmos-counter-3,wrong-completion-equation,True,completion equation mismatch
+sat-priority-counter-4,drop-case-reset-at-nine,True,next-state equation mismatch

@@ -1,0 +1,27 @@
+{
+  "counts": {
+    "accepted_translation_validations": 10,
+    "detached_source_text_joint_substitution_checks": 1,
+    "external_cuttable_joint_substitution_checks": 1,
+    "source_byte_substitution_checks": 1,
+    "structural_translation_comparison_units": 601,
+    "translation_binding_mutation_checks": 8
+  },
+  "errors": 0,
+  "failures": 0,
+  "phase": "post_fix_targeted_regression",
+  "scope": "affected translation-acceptance path only; no minimization search or historical campaign replay",
+  "semantic_units_this_run": 21,
+  "skipped": 0,
+  "status": "PASS",
+  "structural_translation_comparison_units_reported_separately": 601,
+  "test_methods": [
+    "test_all_pinned_blobs_and_translations_validate",
+    "test_eight_binding_mutations_are_rejected",
+    "test_validator_rejects_source_byte_substitution",
+    "test_validator_rejects_detached_source_text_with_matching_ir",
+    "test_validator_rejects_external_cuttable_with_matching_ir"
+  ],
+  "tests_run": 5,
+  "wall_seconds": 0.01059878099999878
+}

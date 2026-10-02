@@ -1,0 +1,39 @@
+{
+  "done": [
+    "and",
+    [
+      "var",
+      "a"
+    ],
+    [
+      "var",
+      "b"
+    ]
+  ],
+  "horizon": 0,
+  "id": "joint-omission",
+  "inputs": [],
+  "registers": [],
+  "wires": [
+    {
+      "cut": true,
+      "expr": [
+        "const",
+        1,
+        0
+      ],
+      "name": "a",
+      "width": 1
+    },
+    {
+      "cut": true,
+      "expr": [
+        "const",
+        1,
+        0
+      ],
+      "name": "b",
+      "width": 1
+    }
+  ]
+}

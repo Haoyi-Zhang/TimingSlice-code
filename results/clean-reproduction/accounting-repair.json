@@ -1,0 +1,10 @@
+{
+  "issue": "The packaging wrapper assumed work objects contained only observations and successors; they also contain the limit field.",
+  "scientific_commands_exit_codes": [
+    0,
+    0,
+    0
+  ],
+  "repair": "Sum named observations and successors from existing outputs.",
+  "scientific_execution_repeated": false
+}

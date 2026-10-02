@@ -1,0 +1,31 @@
+{
+  "done": [
+    "var",
+    "q"
+  ],
+  "horizon": 3,
+  "id": "initial-completion",
+  "inputs": [
+    {
+      "name": "x",
+      "values": [
+        0,
+        1
+      ],
+      "width": 1
+    }
+  ],
+  "registers": [
+    {
+      "cut": true,
+      "init": 1,
+      "name": "q",
+      "next": [
+        "var",
+        "x"
+      ],
+      "width": 1
+    }
+  ],
+  "wires": []
+}

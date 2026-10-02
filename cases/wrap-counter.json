@@ -1,0 +1,38 @@
+{
+  "done": [
+    "eq",
+    [
+      "var",
+      "q"
+    ],
+    [
+      "const",
+      2,
+      0
+    ]
+  ],
+  "horizon": 4,
+  "id": "wrap-counter",
+  "inputs": [],
+  "registers": [
+    {
+      "cut": true,
+      "init": 3,
+      "name": "q",
+      "next": [
+        "add",
+        [
+          "var",
+          "q"
+        ],
+        [
+          "const",
+          2,
+          1
+        ]
+      ],
+      "width": 2
+    }
+  ],
+  "wires": []
+}

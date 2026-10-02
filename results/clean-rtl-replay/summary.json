@@ -1,0 +1,25 @@
+{
+  "checker_semantic_obligations": 828,
+  "dynamic_negative_control_sample_checks": 0,
+  "dynamic_translation_mutations_detected": 0,
+  "first_completion_bundles_checked": 4,
+  "full_state_and_done_sample_checks": 4965,
+  "mode": "replay",
+  "not_established": [
+    "unrestricted Verilog/SystemVerilog parsing",
+    "mechanized correctness of either source parser",
+    "accelerator workload coverage",
+    "physical timing or simulation speedup"
+  ],
+  "producer_semantic_obligations_executed": 0,
+  "public_rtl_modules": 10,
+  "retained_producer_semantic_obligations": 8556,
+  "scope": "fixed Yosys sources in a documented restricted single-clock two-state subset; finite transaction harnesses",
+  "source_blobs_independently_verified": 10,
+  "status": "PASS",
+  "structural_translation_comparison_units": 601,
+  "total_semantic_units": 5803,
+  "translation_binding_mutations_rejected": 0,
+  "translation_validation_obligations": 10,
+  "translation_validator_mutation_checks": 0
+}

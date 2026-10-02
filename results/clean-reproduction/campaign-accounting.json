@@ -1,0 +1,10 @@
+{
+  "initial_pilot_semantic_work": 52313,
+  "coverage_repair_semantic_work": 5402,
+  "clean_pilot_semantic_work": 55379,
+  "producer_cli_semantic_work": 6416,
+  "checker_cli_semantic_work": 535,
+  "cumulative_semantic_work": 120045,
+  "campaign_semantic_work_cap": 150000,
+  "accounting_rule": "Only observations plus successors are semantic work; limit is metadata. Wrapper metadata-field assertion was repaired by reading existing results; no scientific command was repeated."
+}

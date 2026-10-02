@@ -1,0 +1,14 @@
+{
+  "accepted_source_subset": "restricted-single-clock-two-state",
+  "case": "smtbmc-demo4",
+  "clock_verified": true,
+  "completion_equation_verified": true,
+  "continuous_equations_verified": 0,
+  "cut_policy_verified": true,
+  "input_domains_verified": 3,
+  "module": "demo4",
+  "register_equations_verified": 2,
+  "source_blob_verified": true,
+  "status": "ACCEPT",
+  "structural_comparison_units": 92
+}

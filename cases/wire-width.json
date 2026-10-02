@@ -1,0 +1,48 @@
+{
+  "done": [
+    "eq",
+    [
+      "var",
+      "w"
+    ],
+    [
+      "const",
+      2,
+      0
+    ]
+  ],
+  "horizon": 1,
+  "id": "wire-width",
+  "inputs": [
+    {
+      "name": "x",
+      "values": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "width": 2
+    }
+  ],
+  "registers": [],
+  "wires": [
+    {
+      "cut": true,
+      "expr": [
+        "add",
+        [
+          "var",
+          "x"
+        ],
+        [
+          "const",
+          2,
+          1
+        ]
+      ],
+      "name": "w",
+      "width": 2
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "done": [
+    "eq",
+    [
+      "var",
+      "counter"
+    ],
+    [
+      "const",
+      4,
+      3
+    ]
+  ],
+  "horizon": 4,
+  "id": "smt2-counter",
+  "inputs": [],
+  "registers": [
+    {
+      "cut": false,
+      "init": 0,
+      "name": "counter",
+      "next": [
+        "mux",
+        [
+          "and",
+          [
+            "const",
+            1,
+            1
+          ],
+          [
+            "not",
+            [
+              "eq",
+              [
+                "var",
+                "counter"
+              ],
+              [
+                "const",
+                4,
+                10
+              ]
+            ]
+          ]
+        ],
+        [
+          "add",
+          [
+            "var",
+            "counter"
+          ],
+          [
+            "const",
+            4,
+            1
+          ]
+        ],
+        [
+          "mux",
+          [
+            "and",
+            [
+              "const",
+              1,
+              1
+            ],
+            [
+              "eq",
+              [
+                "var",
+                "counter"
+              ],
+              [
+                "const",
+                4,
+                10
+              ]
+            ]
+          ],
+          [
+            "const",
+            4,
+            0
+          ],
+          [
+            "var",
+            "counter"
+          ]
+        ]
+      ],
+      "width": 4
+    }
+  ],
+  "wires": []
+}

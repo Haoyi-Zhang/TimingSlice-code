@@ -1,0 +1,14 @@
+{
+  "components": {
+    "accepted_translation_validations": 10,
+    "checker_observations_and_successors": 828,
+    "dynamic_negative_control_samples": 55,
+    "full_state_and_done_samples": 4965,
+    "producer_observations_and_successors": 8556,
+    "translation_binding_mutations": 8
+  },
+  "issue": "The development summary initially counted every internal AST-node comparison as a separate campaign semantic obligation.",
+  "recomputed_generation_semantic_units": 14422,
+  "repair": "Count one accepted source-to-equation validation obligation per pinned module; retain the 601 node comparisons as a separate structural diagnostic. No scientific command was repeated.",
+  "scientific_execution_repeated": false
+}

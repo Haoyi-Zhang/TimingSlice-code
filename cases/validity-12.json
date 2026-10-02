@@ -1,0 +1,70 @@
+{
+  "done": [
+    "and",
+    [
+      "var",
+      "c"
+    ],
+    [
+      "or",
+      [
+        "and",
+        [
+          "var",
+          "u0"
+        ],
+        [
+          "not",
+          [
+            "var",
+            "u1"
+          ]
+        ]
+      ],
+      [
+        "and",
+        [
+          "var",
+          "u0"
+        ],
+        [
+          "var",
+          "u1"
+        ]
+      ]
+    ]
+  ],
+  "horizon": 0,
+  "id": "validity-12",
+  "inputs": [
+    {
+      "name": "u0",
+      "values": [
+        0,
+        1
+      ],
+      "width": 1
+    },
+    {
+      "name": "u1",
+      "values": [
+        0,
+        1
+      ],
+      "width": 1
+    }
+  ],
+  "registers": [],
+  "wires": [
+    {
+      "cut": true,
+      "expr": [
+        "const",
+        1,
+        0
+      ],
+      "name": "c",
+      "width": 1
+    }
+  ]
+}

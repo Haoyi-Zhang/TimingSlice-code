@@ -1,0 +1,5 @@
+case,candidates,retained,retained_ids,producer_obligations,producer_executed_this_run,checker_obligations,status
+cmos-counter-3,1,1,r:count,1320,True,227,inclusion-minimal
+intro-counter-2,1,1,r:count,420,True,127,inclusion-minimal
+asic-tutorial-counter-4,1,1,r:count,4556,True,327,inclusion-minimal
+sat-priority-counter-4,1,1,r:counter,2260,True,147,inclusion-minimal

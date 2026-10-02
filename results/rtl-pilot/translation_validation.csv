@@ -1,0 +1,11 @@
+status,case,module,source_blob_verified,clock_verified,input_domains_verified,register_equations_verified,continuous_equations_verified,completion_equation_verified,cut_policy_verified,structural_comparison_units,accepted_source_subset
+ACCEPT,cmos-counter-3,counter,True,True,2,1,0,True,True,45,restricted-single-clock-two-state
+ACCEPT,intro-counter-2,counter,True,True,2,1,0,True,True,45,restricted-single-clock-two-state
+ACCEPT,smt2-counter,main,True,True,0,1,0,True,True,49,restricted-single-clock-two-state
+ACCEPT,verific-counter,top,True,True,1,1,0,True,True,41,restricted-single-clock-two-state
+ACCEPT,smtbmc-demo4,demo4,True,True,3,2,0,True,True,92,restricted-single-clock-two-state
+ACCEPT,asic-up-counter-8,up_counter,True,True,2,1,0,True,True,45,restricted-single-clock-two-state
+ACCEPT,asic-up-down-8,up_down_counter,True,True,2,1,0,True,True,67,restricted-single-clock-two-state
+ACCEPT,asic-load-counter-8,up_counter_load,True,True,4,1,0,True,True,67,restricted-single-clock-two-state
+ACCEPT,asic-tutorial-counter-4,counter,True,True,2,1,0,True,True,57,restricted-single-clock-two-state
+ACCEPT,sat-priority-counter-4,example004,True,True,1,1,1,True,True,93,restricted-single-clock-two-state

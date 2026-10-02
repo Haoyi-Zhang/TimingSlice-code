@@ -1,0 +1,204 @@
+{
+  "attempts": [
+    {
+      "equation": "r:q",
+      "status": "invalid"
+    }
+  ],
+  "model_id": "initial-completion",
+  "necessities": [
+    {
+      "equation": "r:q",
+      "witness": {
+        "cuts": [
+          {
+            "r:q": 1
+          },
+          {}
+        ],
+        "horizon": 3,
+        "inputs": [
+          [
+            0
+          ],
+          [
+            0
+          ]
+        ],
+        "kind": "counterexample",
+        "observation": "waveform",
+        "predecessors": {
+          "frontiers": [
+            [
+              [
+                [
+                  1
+                ],
+                [
+                  1
+                ],
+                0,
+                0
+              ]
+            ],
+            [
+              [
+                [
+                  0
+                ],
+                [
+                  0
+                ],
+                0,
+                -1
+              ],
+              [
+                [
+                  0
+                ],
+                [
+                  1
+                ],
+                0,
+                0
+              ],
+              [
+                [
+                  1
+                ],
+                [
+                  0
+                ],
+                1,
+                -1
+              ],
+              [
+                [
+                  1
+                ],
+                [
+                  1
+                ],
+                1,
+                0
+              ]
+            ]
+          ]
+        },
+        "retained": [],
+        "time": 1
+      }
+    }
+  ],
+  "preservation": {
+    "frontiers": [
+      [
+        [
+          [
+            1
+          ],
+          [
+            1
+          ]
+        ]
+      ],
+      [
+        [
+          [
+            0
+          ],
+          [
+            0
+          ]
+        ],
+        [
+          [
+            1
+          ],
+          [
+            1
+          ]
+        ]
+      ],
+      [
+        [
+          [
+            0
+          ],
+          [
+            0
+          ]
+        ],
+        [
+          [
+            1
+          ],
+          [
+            1
+          ]
+        ]
+      ],
+      [
+        [
+          [
+            0
+          ],
+          [
+            0
+          ]
+        ],
+        [
+          [
+            1
+          ],
+          [
+            1
+          ]
+        ]
+      ]
+    ],
+    "horizon": 3,
+    "kind": "preservation",
+    "observation": "waveform",
+    "retained": [
+      "r:q"
+    ]
+  },
+  "status": "inclusion-minimal",
+  "timing_model": {
+    "done": [
+      "var",
+      "q"
+    ],
+    "horizon": 3,
+    "id": "initial-completion-timing",
+    "inputs": [
+      {
+        "name": "x",
+        "values": [
+          0,
+          1
+        ],
+        "width": 1
+      }
+    ],
+    "registers": [
+      {
+        "cut": false,
+        "init": 1,
+        "name": "q",
+        "next": [
+          "var",
+          "x"
+        ],
+        "width": 1
+      }
+    ],
+    "wires": []
+  },
+  "work": {
+    "limit": 100000,
+    "observations": 44,
+    "successors": 38
+  }
+}

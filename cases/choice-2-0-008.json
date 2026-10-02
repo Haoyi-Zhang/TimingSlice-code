@@ -1,0 +1,118 @@
+{
+  "done": [
+    "or",
+    [
+      "or",
+      [
+        "and",
+        [
+          "var",
+          "a0"
+        ],
+        [
+          "var",
+          "b0"
+        ]
+      ],
+      [
+        "and",
+        [
+          "var",
+          "a1"
+        ],
+        [
+          "var",
+          "b1"
+        ]
+      ]
+    ],
+    [
+      "and",
+      [
+        "and",
+        [
+          "xor",
+          [
+            "var",
+            "a0"
+          ],
+          [
+            "var",
+            "b0"
+          ]
+        ],
+        [
+          "xor",
+          [
+            "var",
+            "a1"
+          ],
+          [
+            "var",
+            "b1"
+          ]
+        ]
+      ],
+      [
+        "not",
+        [
+          "and",
+          [
+            "var",
+            "a0"
+          ],
+          [
+            "var",
+            "a1"
+          ]
+        ]
+      ]
+    ]
+  ],
+  "horizon": 0,
+  "id": "choice-2-0-008",
+  "inputs": [],
+  "registers": [],
+  "wires": [
+    {
+      "cut": true,
+      "expr": [
+        "const",
+        1,
+        0
+      ],
+      "name": "a0",
+      "width": 1
+    },
+    {
+      "cut": true,
+      "expr": [
+        "const",
+        1,
+        0
+      ],
+      "name": "b0",
+      "width": 1
+    },
+    {
+      "cut": true,
+      "expr": [
+        "const",
+        1,
+        0
+      ],
+      "name": "a1",
+      "width": 1
+    },
+    {
+      "cut": true,
+      "expr": [
+        "const",
+        1,
+        0
+      ],
+      "name": "b1",
+      "width": 1
+    }
+  ]
+}

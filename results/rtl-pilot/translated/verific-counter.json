@@ -1,0 +1,89 @@
+{
+  "done": [
+    "eq",
+    [
+      "var",
+      "cnt"
+    ],
+    [
+      "const",
+      4,
+      3
+    ]
+  ],
+  "horizon": 4,
+  "id": "verific-counter",
+  "inputs": [
+    {
+      "name": "rst",
+      "values": [
+        0,
+        1
+      ],
+      "width": 1
+    }
+  ],
+  "registers": [
+    {
+      "cut": false,
+      "init": 0,
+      "name": "cnt",
+      "next": [
+        "mux",
+        [
+          "and",
+          [
+            "const",
+            1,
+            1
+          ],
+          [
+            "not",
+            [
+              "var",
+              "rst"
+            ]
+          ]
+        ],
+        [
+          "add",
+          [
+            "var",
+            "cnt"
+          ],
+          [
+            "const",
+            4,
+            1
+          ]
+        ],
+        [
+          "mux",
+          [
+            "and",
+            [
+              "const",
+              1,
+              1
+            ],
+            [
+              "var",
+              "rst"
+            ]
+          ],
+          [
+            "const",
+            4,
+            0
+          ],
+          [
+            "var",
+            "cnt"
+          ]
+        ]
+      ],
+      "width": 4
+    }
+  ],
+  "wires": []
+}

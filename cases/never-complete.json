@@ -1,0 +1,26 @@
+{
+  "done": [
+    "const",
+    1,
+    0
+  ],
+  "horizon": 3,
+  "id": "never-complete",
+  "inputs": [],
+  "registers": [
+    {
+      "cut": true,
+      "init": 0,
+      "name": "q",
+      "next": [
+        "not",
+        [
+          "var",
+          "q"
+        ]
+      ],
+      "width": 1
+    }
+  ],
+  "wires": []
+}

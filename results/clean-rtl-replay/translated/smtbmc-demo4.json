@@ -1,0 +1,197 @@
+{
+  "done": [
+    "eq",
+    [
+      "var",
+      "r1"
+    ],
+    [
+      "const",
+      16,
+      3
+    ]
+  ],
+  "horizon": 2,
+  "id": "smtbmc-demo4",
+  "inputs": [
+    {
+      "name": "rst",
+      "values": [
+        0,
+        1
+      ],
+      "width": 1
+    },
+    {
+      "name": "inv2",
+      "values": [
+        0,
+        1
+      ],
+      "width": 1
+    },
+    {
+      "name": "in",
+      "values": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "width": 16
+    }
+  ],
+  "registers": [
+    {
+      "cut": false,
+      "init": 0,
+      "name": "r1",
+      "next": [
+        "mux",
+        [
+          "and",
+          [
+            "const",
+            1,
+            1
+          ],
+          [
+            "not",
+            [
+              "var",
+              "rst"
+            ]
+          ]
+        ],
+        [
+          "add",
+          [
+            "var",
+            "r1"
+          ],
+          [
+            "var",
+            "in"
+          ]
+        ],
+        [
+          "mux",
+          [
+            "and",
+            [
+              "const",
+              1,
+              1
+            ],
+            [
+              "var",
+              "rst"
+            ]
+          ],
+          [
+            "var",
+            "in"
+          ],
+          [
+            "var",
+            "r1"
+          ]
+        ]
+      ],
+      "width": 16
+    },
+    {
+      "cut": false,
+      "init": 0,
+      "name": "r2",
+      "next": [
+        "mux",
+        [
+          "and",
+          [
+            "const",
+            1,
+            1
+          ],
+          [
+            "not",
+            [
+              "var",
+              "rst"
+            ]
+          ]
+        ],
+        [
+          "mux",
+          [
+            "var",
+            "inv2"
+          ],
+          [
+            "sub",
+            [
+              "const",
+              16,
+              0
+            ],
+            [
+              "sub",
+              [
+                "var",
+                "r2"
+              ],
+              [
+                "var",
+                "in"
+              ]
+            ]
+          ],
+          [
+            "sub",
+            [
+              "var",
+              "r2"
+            ],
+            [
+              "var",
+              "in"
+            ]
+          ]
+        ],
+        [
+          "mux",
+          [
+            "and",
+            [
+              "const",
+              1,
+              1
+            ],
+            [
+              "var",
+              "rst"
+            ]
+          ],
+          [
+            "sub",
+            [
+              "const",
+              16,
+              0
+            ],
+            [
+              "var",
+              "in"
+            ]
+          ],
+          [
+            "var",
+            "r2"
+          ]
+        ]
+      ],
+      "width": 16
+    }
+  ],
+  "wires": []
+}

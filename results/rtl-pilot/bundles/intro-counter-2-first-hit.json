@@ -1,0 +1,375 @@
+{
+  "attempts": [
+    {
+      "equation": "r:count",
+      "status": "invalid"
+    }
+  ],
+  "model_id": "intro-counter-2",
+  "necessities": [
+    {
+      "equation": "r:count",
+      "witness": {
+        "cuts": [
+          {
+            "r:count": 2
+          },
+          {}
+        ],
+        "horizon": 3,
+        "inputs": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        "kind": "counterexample",
+        "observation": "first-hit",
+        "predecessors": {
+          "frontiers": [
+            [
+              [
+                [
+                  0
+                ],
+                [
+                  0
+                ],
+                0,
+                0
+              ]
+            ],
+            [
+              [
+                [
+                  0
+                ],
+                [
+                  0
+                ],
+                0,
+                -1
+              ],
+              [
+                [
+                  0
+                ],
+                [
+                  0
+                ],
+                1,
+                -1
+              ],
+              [
+                [
+                  0
+                ],
+                [
+                  1
+                ],
+                0,
+                -1
+              ],
+              [
+                [
+                  0
+                ],
+                [
+                  1
+                ],
+                1,
+                -1
+              ],
+              [
+                [
+                  0
+                ],
+                [
+                  2
+                ],
+                0,
+                0
+              ],
+              [
+                [
+                  0
+                ],
+                [
+                  2
+                ],
+                1,
+                0
+              ],
+              [
+                [
+                  0
+                ],
+                [
+                  3
+                ],
+                0,
+                1
+              ],
+              [
+                [
+                  0
+                ],
+                [
+                  3
+                ],
+                1,
+                1
+              ],
+              [
+                [
+                  1
+                ],
+                [
+                  0
+                ],
+                1,
+                -1
+              ],
+              [
+                [
+                  1
+                ],
+                [
+                  1
+                ],
+                1,
+                -1
+              ],
+              [
+                [
+                  1
+                ],
+                [
+                  2
+                ],
+                1,
+                0
+              ],
+              [
+                [
+                  1
+                ],
+                [
+                  3
+                ],
+                1,
+                1
+              ]
+            ]
+          ]
+        },
+        "retained": [],
+        "time": 1
+      }
+    }
+  ],
+  "preservation": {
+    "frontiers": [
+      [
+        [
+          [
+            0
+          ],
+          [
+            0
+          ]
+        ]
+      ],
+      [
+        [
+          [
+            0
+          ],
+          [
+            0
+          ]
+        ],
+        [
+          [
+            1
+          ],
+          [
+            1
+          ]
+        ]
+      ],
+      [
+        [
+          [
+            0
+          ],
+          [
+            0
+          ]
+        ],
+        [
+          [
+            1
+          ],
+          [
+            1
+          ]
+        ],
+        [
+          [
+            2
+          ],
+          [
+            2
+          ]
+        ]
+      ],
+      [
+        [
+          [
+            0
+          ],
+          [
+            0
+          ]
+        ],
+        [
+          [
+            1
+          ],
+          [
+            1
+          ]
+        ],
+        [
+          [
+            2
+          ],
+          [
+            2
+          ]
+        ]
+      ]
+    ],
+    "horizon": 3,
+    "kind": "preservation",
+    "observation": "first-hit",
+    "retained": [
+      "r:count"
+    ]
+  },
+  "status": "inclusion-minimal",
+  "timing_model": {
+    "done": [
+      "eq",
+      [
+        "var",
+        "count"
+      ],
+      [
+        "const",
+        2,
+        2
+      ]
+    ],
+    "horizon": 3,
+    "id": "intro-counter-2-timing",
+    "inputs": [
+      {
+        "name": "rst",
+        "values": [
+          0,
+          1
+        ],
+        "width": 1
+      },
+      {
+        "name": "en",
+        "values": [
+          0,
+          1
+        ],
+        "width": 1
+      }
+    ],
+    "registers": [
+      {
+        "cut": false,
+        "init": 0,
+        "name": "count",
+        "next": [
+          "mux",
+          [
+            "and",
+            [
+              "and",
+              [
+                "const",
+                1,
+                1
+              ],
+              [
+                "not",
+                [
+                  "var",
+                  "rst"
+                ]
+              ]
+            ],
+            [
+              "var",
+              "en"
+            ]
+          ],
+          [
+            "add",
+            [
+              "var",
+              "count"
+            ],
+            [
+              "const",
+              2,
+              1
+            ]
+          ],
+          [
+            "mux",
+            [
+              "and",
+              [
+                "const",
+                1,
+                1
+              ],
+              [
+                "var",
+                "rst"
+              ]
+            ],
+            [
+              "const",
+              2,
+              0
+            ],
+            [
+              "var",
+              "count"
+            ]
+          ]
+        ],
+        "width": 2
+      }
+    ],
+    "wires": []
+  },
+  "work": {
+    "limit": 20000,
+    "observations": 160,
+    "successors": 260
+  }
+}

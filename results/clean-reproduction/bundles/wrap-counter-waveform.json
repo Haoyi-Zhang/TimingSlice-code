@@ -1,0 +1,193 @@
+{
+  "attempts": [
+    {
+      "equation": "r:q",
+      "status": "invalid"
+    }
+  ],
+  "model_id": "wrap-counter",
+  "necessities": [
+    {
+      "equation": "r:q",
+      "witness": {
+        "cuts": [
+          {
+            "r:q": 1
+          },
+          {}
+        ],
+        "horizon": 4,
+        "inputs": [
+          [],
+          []
+        ],
+        "kind": "counterexample",
+        "observation": "waveform",
+        "predecessors": {
+          "frontiers": [
+            [
+              [
+                [
+                  3
+                ],
+                [
+                  3
+                ],
+                0,
+                0
+              ]
+            ],
+            [
+              [
+                [
+                  0
+                ],
+                [
+                  0
+                ],
+                0,
+                -1
+              ],
+              [
+                [
+                  0
+                ],
+                [
+                  1
+                ],
+                0,
+                0
+              ],
+              [
+                [
+                  0
+                ],
+                [
+                  2
+                ],
+                0,
+                1
+              ],
+              [
+                [
+                  0
+                ],
+                [
+                  3
+                ],
+                0,
+                1
+              ]
+            ]
+          ]
+        },
+        "retained": [],
+        "time": 1
+      }
+    }
+  ],
+  "preservation": {
+    "frontiers": [
+      [
+        [
+          [
+            3
+          ],
+          [
+            3
+          ]
+        ]
+      ],
+      [
+        [
+          [
+            0
+          ],
+          [
+            0
+          ]
+        ]
+      ],
+      [
+        [
+          [
+            1
+          ],
+          [
+            1
+          ]
+        ]
+      ],
+      [
+        [
+          [
+            2
+          ],
+          [
+            2
+          ]
+        ]
+      ],
+      [
+        [
+          [
+            3
+          ],
+          [
+            3
+          ]
+        ]
+      ]
+    ],
+    "horizon": 4,
+    "kind": "preservation",
+    "observation": "waveform",
+    "retained": [
+      "r:q"
+    ]
+  },
+  "status": "inclusion-minimal",
+  "timing_model": {
+    "done": [
+      "eq",
+      [
+        "var",
+        "q"
+      ],
+      [
+        "const",
+        2,
+        0
+      ]
+    ],
+    "horizon": 4,
+    "id": "wrap-counter-timing",
+    "inputs": [],
+    "registers": [
+      {
+        "cut": false,
+        "init": 3,
+        "name": "q",
+        "next": [
+          "add",
+          [
+            "var",
+            "q"
+          ],
+          [
+            "const",
+            2,
+            1
+          ]
+        ],
+        "width": 2
+      }
+    ],
+    "wires": []
+  },
+  "work": {
+    "limit": 100000,
+    "observations": 20,
+    "successors": 24
+  }
+}

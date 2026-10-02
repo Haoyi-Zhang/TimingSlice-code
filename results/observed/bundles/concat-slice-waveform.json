@@ -1,0 +1,173 @@
+{
+  "attempts": [
+    {
+      "equation": "w:joined",
+      "status": "invalid"
+    },
+    {
+      "equation": "w:top",
+      "status": "invalid"
+    }
+  ],
+  "model_id": "concat-slice",
+  "necessities": [
+    {
+      "equation": "w:joined",
+      "witness": {
+        "cuts": [
+          {
+            "w:joined": 2
+          }
+        ],
+        "horizon": 1,
+        "inputs": [
+          [
+            0,
+            0
+          ]
+        ],
+        "kind": "counterexample",
+        "observation": "waveform",
+        "predecessors": {
+          "frontiers": [
+            [
+              [
+                [],
+                [],
+                0,
+                0
+              ]
+            ]
+          ]
+        },
+        "retained": [
+          "w:top"
+        ],
+        "time": 0
+      }
+    },
+    {
+      "equation": "w:top",
+      "witness": {
+        "cuts": [
+          {
+            "w:top": 1
+          }
+        ],
+        "horizon": 1,
+        "inputs": [
+          [
+            0,
+            0
+          ]
+        ],
+        "kind": "counterexample",
+        "observation": "waveform",
+        "predecessors": {
+          "frontiers": [
+            [
+              [
+                [],
+                [],
+                0,
+                0
+              ]
+            ]
+          ]
+        },
+        "retained": [
+          "w:joined"
+        ],
+        "time": 0
+      }
+    }
+  ],
+  "preservation": {
+    "frontiers": [
+      [
+        [
+          [],
+          []
+        ]
+      ],
+      [
+        [
+          [],
+          []
+        ]
+      ]
+    ],
+    "horizon": 1,
+    "kind": "preservation",
+    "observation": "waveform",
+    "retained": [
+      "w:joined",
+      "w:top"
+    ]
+  },
+  "status": "inclusion-minimal",
+  "timing_model": {
+    "done": [
+      "var",
+      "top"
+    ],
+    "horizon": 1,
+    "id": "concat-slice-timing",
+    "inputs": [
+      {
+        "name": "lo",
+        "values": [
+          0,
+          1
+        ],
+        "width": 1
+      },
+      {
+        "name": "hi",
+        "values": [
+          0,
+          1
+        ],
+        "width": 1
+      }
+    ],
+    "registers": [],
+    "wires": [
+      {
+        "cut": false,
+        "expr": [
+          "concat",
+          [
+            "var",
+            "hi"
+          ],
+          [
+            "var",
+            "lo"
+          ]
+        ],
+        "name": "joined",
+        "width": 2
+      },
+      {
+        "cut": false,
+        "expr": [
+          "slice",
+          [
+            "var",
+            "joined"
+          ],
+          1,
+          1
+        ],
+        "name": "top",
+        "width": 1
+      }
+    ]
+  },
+  "work": {
+    "limit": 100000,
+    "observations": 80,
+    "successors": 28
+  }
+}

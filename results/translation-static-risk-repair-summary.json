@@ -1,0 +1,26 @@
+{
+  "case_id": "cmos-counter-3",
+  "post_fix": {
+    "accepted_translation_validations": 10,
+    "detached_source_text_joint_substitution_rejected": 1,
+    "external_cuttable_joint_substitution_rejected": 1,
+    "independent_source_byte_substitution_rejected": 1,
+    "original_binding_mutations_rejected": 8,
+    "receipt": "results/translation-static-risk-postfix.json",
+    "semantic_units": 21,
+    "status": "PASS",
+    "tests_run": 5
+  },
+  "pre_fix": {
+    "external_cuttable_and_matching_ir_with_manifest_unchanged": "ACCEPT",
+    "receipt": "results/translation-static-risk-pre-fix.json",
+    "semantic_units": 2,
+    "source_text_and_matching_ir_with_real_bytes": "ACCEPT"
+  },
+  "repair": {
+    "candidate_binding": "manifest cuttable field is parsed inside the validator and must match the external argument; manifest-bound set drives IR comparison",
+    "source_binding": "strict UTF-8 decode from source_bytes; separately passed source_text must match exactly"
+  },
+  "scope": "validator hardening only; retained ten-module scientific data were not changed or declared erroneous",
+  "status": "PASS"
+}

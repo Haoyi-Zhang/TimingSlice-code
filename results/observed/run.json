@@ -1,0 +1,11 @@
+{
+  "address_space_limit_bytes": 1073741824,
+  "command": "python3 reproduce.py --out results/observed",
+  "cpu_limit_seconds": 90,
+  "cpu_seconds": 0.334183965,
+  "exit_code": 0,
+  "failure": null,
+  "peak_rss_kib": 97964,
+  "wall_seconds": 0.33799490599994897,
+  "worker_processes": 1
+}

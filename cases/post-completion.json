@@ -1,0 +1,134 @@
+{
+  "done": [
+    "mux",
+    [
+      "eq",
+      [
+        "var",
+        "phase"
+      ],
+      [
+        "const",
+        2,
+        2
+      ]
+    ],
+    [
+      "const",
+      1,
+      1
+    ],
+    [
+      "and",
+      [
+        "eq",
+        [
+          "var",
+          "phase"
+        ],
+        [
+          "const",
+          2,
+          3
+        ]
+      ],
+      [
+        "xor",
+        [
+          "var",
+          "flag"
+        ],
+        [
+          "slice",
+          [
+            "var",
+            "payload"
+          ],
+          0,
+          1
+        ]
+      ]
+    ]
+  ],
+  "horizon": 4,
+  "id": "post-completion",
+  "inputs": [
+    {
+      "name": "x",
+      "values": [
+        0,
+        1
+      ],
+      "width": 1
+    }
+  ],
+  "registers": [
+    {
+      "cut": true,
+      "init": 0,
+      "name": "phase",
+      "next": [
+        "mux",
+        [
+          "eq",
+          [
+            "var",
+            "phase"
+          ],
+          [
+            "const",
+            2,
+            3
+          ]
+        ],
+        [
+          "const",
+          2,
+          3
+        ],
+        [
+          "add",
+          [
+            "var",
+            "phase"
+          ],
+          [
+            "const",
+            2,
+            1
+          ]
+        ]
+      ],
+      "width": 2
+    },
+    {
+      "cut": true,
+      "init": 0,
+      "name": "flag",
+      "next": [
+        "var",
+        "x"
+      ],
+      "width": 1
+    },
+    {
+      "cut": true,
+      "init": 0,
+      "name": "payload",
+      "next": [
+        "add",
+        [
+          "var",
+          "payload"
+        ],
+        [
+          "const",
+          2,
+          1
+        ]
+      ],
+      "width": 2
+    }
+  ],
+  "wires": []
+}

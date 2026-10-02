@@ -1,0 +1,17 @@
+{
+  "counts": {
+    "checker_semantic_obligations": 18,
+    "dynamic_negative_control_sample_checks": 55,
+    "operator_value_checks": 10,
+    "structural_translation_comparison_units": 601,
+    "translation_binding_mutation_checks": 8
+  },
+  "errors": 0,
+  "failures": 1,
+  "scope": "software regression; no minimization search or new scientific instance selection",
+  "semantic_units_this_run": 83,
+  "skipped": 0,
+  "status": "FAIL",
+  "tests_run": 19,
+  "wall_seconds": 0.667853292000018
+}

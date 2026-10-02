@@ -1,0 +1,11 @@
+case,traces,samples,registers,register_bits,inputs,input_alphabet,horizon,expression_nodes,full_state_and_done_match,source_path,source_blob
+cmos-counter-3,256,1280,1,3,2,4,4,19,True,examples/cmos/counter.v,f21658724f641e05fb5b0a3c0e7845da9044a3e6
+intro-counter-2,64,256,1,2,2,4,3,19,True,docs/source/code_examples/intro/counter.v,36b878e31328a9647e7876881f1afd877a9c169d
+smt2-counter,1,5,1,4,0,1,4,21,True,backends/smt2/example.v,b195266eb7e1344e837a33c1726b068f1a40254c
+verific-counter,16,80,1,4,1,2,4,17,True,frontends/verific/example.sv,21a5d42c85c1100c5013bfa02244defd62f74295
+smtbmc-demo4,256,768,2,32,3,16,2,40,True,examples/smtbmc/demo4.v,3f1b47277dd11c0d882a30a9721e3ad9cf163df4
+asic-up-counter-8,64,256,1,8,2,4,3,19,True,tests/asicworld/code_hdl_models_up_counter.v,4ebd58b2115ca87b43962ed0f34fb1caab142031
+asic-up-down-8,64,256,1,8,2,4,3,30,True,tests/asicworld/code_hdl_models_up_down_counter.v,9a634edeb89f3fcf92edced066b7410185edc6d7
+asic-load-counter-8,576,1728,1,8,4,24,2,30,True,tests/asicworld/code_hdl_models_up_counter_load.v,89645db58660736650241991579970a0030527f3
+asic-tutorial-counter-4,64,256,1,4,2,4,3,25,True,tests/asicworld/code_verilog_tutorial_counter.v,6018d07f7b96ef1e0065290d8a98e7ecd34a6109
+sat-priority-counter-4,16,80,1,4,1,2,4,41,True,passes/sat/example.v,ee6545fab7ba7bff813c1b782a9f3bbf7340637d

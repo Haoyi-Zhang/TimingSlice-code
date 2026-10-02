@@ -1,0 +1,63 @@
+{
+  "attempts": [
+    {
+      "equation": "w:a",
+      "status": "valid"
+    }
+  ],
+  "model_id": "shared-wire",
+  "necessities": [],
+  "preservation": {
+    "frontiers": [
+      [
+        [
+          [],
+          []
+        ]
+      ],
+      [
+        [
+          [],
+          []
+        ]
+      ],
+      [
+        [
+          [],
+          []
+        ]
+      ]
+    ],
+    "horizon": 2,
+    "kind": "preservation",
+    "observation": "waveform",
+    "retained": []
+  },
+  "status": "inclusion-minimal",
+  "timing_model": {
+    "done": [
+      "const",
+      1,
+      0
+    ],
+    "horizon": 2,
+    "id": "shared-wire-timing",
+    "inputs": [
+      {
+        "name": "x",
+        "values": [
+          0,
+          1
+        ],
+        "width": 1
+      }
+    ],
+    "registers": [],
+    "wires": []
+  },
+  "work": {
+    "limit": 100000,
+    "observations": 24,
+    "successors": 16
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "purpose": "repair-test-coverage",
+  "closed_form_transition_pairs": 5401,
+  "mutated_old_state_read_detected": true,
+  "extra_mutant_transition_pairs": 1,
+  "wall_seconds": 0.0450533919999998,
+  "cpu_seconds": 0.04505358000000004,
+  "peak_rss_kib": 96300,
+  "exit_code": 0
+}

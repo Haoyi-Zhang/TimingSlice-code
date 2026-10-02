@@ -1,0 +1,68 @@
+{
+  "done": [
+    "eq",
+    [
+      "var",
+      "q"
+    ],
+    [
+      "const",
+      2,
+      3
+    ]
+  ],
+  "horizon": 4,
+  "id": "enable-counter",
+  "inputs": [
+    {
+      "name": "enable",
+      "values": [
+        0,
+        1
+      ],
+      "width": 1
+    }
+  ],
+  "registers": [
+    {
+      "cut": true,
+      "init": 0,
+      "name": "q",
+      "next": [
+        "mux",
+        [
+          "var",
+          "gate"
+        ],
+        [
+          "add",
+          [
+            "var",
+            "q"
+          ],
+          [
+            "const",
+            2,
+            1
+          ]
+        ],
+        [
+          "var",
+          "q"
+        ]
+      ],
+      "width": 2
+    }
+  ],
+  "wires": [
+    {
+      "cut": true,
+      "expr": [
+        "var",
+        "enable"
+      ],
+      "name": "gate",
+      "width": 1
+    }
+  ]
+}

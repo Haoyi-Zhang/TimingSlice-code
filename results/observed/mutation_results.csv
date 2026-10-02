@@ -1,0 +1,20 @@
+mutation,expected_accepted,accepted,reason
+missing-initial-pair,False,False,initial pair omitted
+missing-live-successor,False,False,uncovered successor
+shorter-horizon,False,False,horizon mismatch
+unsafe-retained-set,False,False,uncovered successor
+unknown-equation,False,False,retained identifiers
+Boolean-in-state-integer,False,False,integer outside declared range
+missing-necessity,False,False,some retained equation lacks a necessity witness
+duplicate-necessity,False,False,necessity equation
+wrong-deletion-context,False,False,wrong deletion context
+tampered-timing-program,False,False,emitted timing program differs from the certified transformation
+timing-program-horizon,False,False,emitted timing program differs from the certified transformation
+changed-source-initial-state,False,False,initial pair omitted
+unsupported-source-operator,False,False,unsupported operator
+replay-only-canonicality,False,False,canonicality needs predecessor-exclusion evidence
+replayable-nonleast-input,False,False,a lexicographically smaller witness exists
+replayable-nonleast-cut,False,False,ordered-prefix successor omitted
+sound-frontier-superset,True,True,valid certificate
+checker-budget-zero,False,False,"UNKNOWN, not a proof verdict"
+producer-budget-zero,False,False,"UNKNOWN, not a proof verdict"

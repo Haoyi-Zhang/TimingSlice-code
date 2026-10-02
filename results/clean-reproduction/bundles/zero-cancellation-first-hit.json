@@ -1,0 +1,114 @@
+{
+  "attempts": [
+    {
+      "equation": "w:a",
+      "status": "invalid"
+    },
+    {
+      "equation": "w:b",
+      "status": "invalid"
+    }
+  ],
+  "model_id": "zero-cancellation",
+  "necessities": [
+    {
+      "equation": "w:a",
+      "witness": {
+        "cuts": [
+          {
+            "w:a": 0
+          }
+        ],
+        "horizon": 0,
+        "inputs": [
+          []
+        ],
+        "kind": "counterexample",
+        "observation": "first-hit",
+        "predecessors": {
+          "frontiers": [
+            [
+              [
+                [],
+                [],
+                0,
+                0
+              ]
+            ]
+          ]
+        },
+        "retained": [
+          "w:b"
+        ],
+        "time": 0
+      }
+    },
+    {
+      "equation": "w:b",
+      "witness": {
+        "cuts": [
+          {
+            "w:b": 0
+          }
+        ],
+        "horizon": 0,
+        "inputs": [
+          []
+        ],
+        "kind": "counterexample",
+        "observation": "first-hit",
+        "predecessors": {
+          "frontiers": [
+            [
+              [
+                [],
+                [],
+                0,
+                0
+              ]
+            ]
+          ]
+        },
+        "retained": [
+          "w:a"
+        ],
+        "time": 0
+      }
+    }
+  ],
+  "preservation": {
+    "frontiers": [
+      [
+        [
+          [],
+          []
+        ]
+      ]
+    ],
+    "horizon": 0,
+    "kind": "preservation",
+    "observation": "first-hit",
+    "retained": [
+      "w:a",
+      "w:b"
+    ]
+  },
+  "status": "inclusion-minimal",
+  "timing_model": {
+    "done": [
+      "const",
+      1,
+      0
+    ],
+    "horizon": 0,
+    "id": "zero-cancellation-timing",
+    "inputs": [],
+    "registers": [],
+    "wires": []
+  },
+  "work": {
+    "limit": 100000,
+    "observations": 13,
+    "successors": 0
+  }
+}

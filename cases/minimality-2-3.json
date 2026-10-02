@@ -1,0 +1,80 @@
+{
+  "done": [
+    "or",
+    [
+      "and",
+      [
+        "var",
+        "c"
+      ],
+      [
+        "var",
+        "x"
+      ]
+    ],
+    [
+      "and",
+      [
+        "var",
+        "r"
+      ],
+      [
+        "or",
+        [
+          "not",
+          [
+            "var",
+            "y"
+          ]
+        ],
+        [
+          "var",
+          "y"
+        ]
+      ]
+    ]
+  ],
+  "horizon": 0,
+  "id": "minimality-2-3",
+  "inputs": [
+    {
+      "name": "x",
+      "values": [
+        0,
+        1
+      ],
+      "width": 1
+    },
+    {
+      "name": "y",
+      "values": [
+        0,
+        1
+      ],
+      "width": 1
+    }
+  ],
+  "registers": [],
+  "wires": [
+    {
+      "cut": true,
+      "expr": [
+        "const",
+        1,
+        0
+      ],
+      "name": "c",
+      "width": 1
+    },
+    {
+      "cut": true,
+      "expr": [
+        "const",
+        1,
+        0
+      ],
+      "name": "r",
+      "width": 1
+    }
+  ]
+}

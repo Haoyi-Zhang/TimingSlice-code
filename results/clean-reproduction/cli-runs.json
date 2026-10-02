@@ -1,0 +1,47 @@
+{
+  "pilot_outer_measurement": {
+    "command": "python3 reproduce.py --out results/local",
+    "working_directory": "proof-carrying-dependency-slices/",
+    "exit_code": 0,
+    "wall_seconds": 1.0404724179998084,
+    "cpu_seconds": 1.434798,
+    "peak_rss_kib": 98344,
+    "worker_processes": 1,
+    "address_space_limit_bytes": 1073741824,
+    "cpu_limit_seconds": 90,
+    "wall_limit_seconds": 118,
+    "timed_out": false,
+    "stdout": "{\n  \"canonical_control_witnesses_checked\": 35,\n  \"claims_not_established\": [\n    \"novelty over the exact anchor and closest literature\",\n    \"Verilog-to-IR semantic preservation\",\n    \"public accelerator applicability\",\n    \"unbounded-cycle equivalence\",\n    \"minimum-cardinality optimizer\",\n    \"RTL-simulator speedup\",\n    \"mechanized proof of the checker\",\n    \"complete venue calibration\",\n    \"TCAD readiness\"\n  ],\n  \"closed_form_transition_pairs\": 5401,\n  \"control_bundles_checked\": 26,\n  \"fixed_retained_set_baselines_checked\": 1,\n  \"generated_control_models\": 13,\n  \"generated_reduction_models\": 96,\n  \"invalid_mutations_rejected\": 16,\n  \"mutation_checks\": 19,\n  \"operator_value_checks\": 2410,\n  \"pilot_status\": \"PASS\",\n  \"public_rtl_modules\": 0,\n  \"reduction_conditions_checked\": 96,\n  \"reduction_subset_queries\": 928,\n  \"research_gate\": \"HOLD\",\n  \"retained_equation_regression_checks\": 1,\n  \"semantic_work\": {\n    \"checker\": 14624,\n    \"closed_form_oracle\": 14180,\n    \"producer\": 26575\n  },\n  \"sound_superset_accepted\": true,\n  \"stored_fixture_models_matched\": 109,\n  \"total_semantic_work\": 55379,\n  \"unique_generated_models\": 109,\n  \"unknown_budget_controls\": 2,\n  \"wider_choice_masks\": [\n    0,\n    15,\n    16,\n    17,\n    18,\n    19,\n    52,\n    53,\n    54,\n    55,\n    88,\n    89,\n    90,\n    91,\n    92,\n    125,\n    126,\n    127,\n    128,\n    162,\n    163,\n    164,\n    165,\n    198,\n    199,\n    200,\n    201,\n    235,\n    236,\n    237,\n    238,\n    255\n  ]\n}\n",
+    "stderr": ""
+  },
+  "producer": {
+    "command": "python3 -m src.producer cases/post-completion.json results/local/example.json --limit 100000",
+    "working_directory": "proof-carrying-dependency-slices/",
+    "exit_code": 0,
+    "wall_seconds": 0.6530162470003233,
+    "cpu_seconds": 1.1133410000000001,
+    "peak_rss_kib": 92972,
+    "worker_processes": 1,
+    "address_space_limit_bytes": 1073741824,
+    "cpu_limit_seconds": 90,
+    "wall_limit_seconds": 118,
+    "timed_out": false,
+    "stdout": "inclusion-minimal\n",
+    "stderr": ""
+  },
+  "checker": {
+    "command": "python3 -m src.checker cases/post-completion.json results/local/example.json --limit 100000",
+    "working_directory": "proof-carrying-dependency-slices/",
+    "exit_code": 0,
+    "wall_seconds": 0.6596455429998969,
+    "cpu_seconds": 1.029769,
+    "peak_rss_kib": 92716,
+    "worker_processes": 1,
+    "address_space_limit_bytes": 1073741824,
+    "cpu_limit_seconds": 90,
+    "wall_limit_seconds": 118,
+    "timed_out": false,
+    "stdout": "{\"accepted\": true, \"claim\": \"inclusion-minimal\", \"work\": {\"limit\": 100000, \"observations\": 198, \"successors\": 337}}\n",
+    "stderr": ""
+  }
+}

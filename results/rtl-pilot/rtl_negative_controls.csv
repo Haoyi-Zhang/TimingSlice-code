@@ -1,0 +1,4 @@
+case,mutation,oracle_detected,paired_samples_to_detection
+intro-counter-2,drop-enable-hold,True,2
+verific-counter,invert-reset-priority,True,2
+smtbmc-demo4,use-old-r1-for-r2,True,51

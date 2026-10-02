@@ -1,0 +1,160 @@
+{
+  "done": [
+    "eq",
+    [
+      "var",
+      "out"
+    ],
+    [
+      "const",
+      8,
+      7
+    ]
+  ],
+  "horizon": 2,
+  "id": "asic-load-counter-8",
+  "inputs": [
+    {
+      "name": "data",
+      "values": [
+        0,
+        3,
+        7
+      ],
+      "width": 8
+    },
+    {
+      "name": "load",
+      "values": [
+        0,
+        1
+      ],
+      "width": 1
+    },
+    {
+      "name": "enable",
+      "values": [
+        0,
+        1
+      ],
+      "width": 1
+    },
+    {
+      "name": "reset",
+      "values": [
+        0,
+        1
+      ],
+      "width": 1
+    }
+  ],
+  "registers": [
+    {
+      "cut": false,
+      "init": 0,
+      "name": "out",
+      "next": [
+        "mux",
+        [
+          "and",
+          [
+            "and",
+            [
+              "and",
+              [
+                "const",
+                1,
+                1
+              ],
+              [
+                "not",
+                [
+                  "var",
+                  "reset"
+                ]
+              ]
+            ],
+            [
+              "not",
+              [
+                "var",
+                "load"
+              ]
+            ]
+          ],
+          [
+            "var",
+            "enable"
+          ]
+        ],
+        [
+          "add",
+          [
+            "var",
+            "out"
+          ],
+          [
+            "const",
+            8,
+            1
+          ]
+        ],
+        [
+          "mux",
+          [
+            "and",
+            [
+              "and",
+              [
+                "const",
+                1,
+                1
+              ],
+              [
+                "not",
+                [
+                  "var",
+                  "reset"
+                ]
+              ]
+            ],
+            [
+              "var",
+              "load"
+            ]
+          ],
+          [
+            "var",
+            "data"
+          ],
+          [
+            "mux",
+            [
+              "and",
+              [
+                "const",
+                1,
+                1
+              ],
+              [
+                "var",
+                "reset"
+              ]
+            ],
+            [
+              "const",
+              8,
+              0
+            ],
+            [
+              "var",
+              "out"
+            ]
+          ]
+        ]
+      ],
+      "width": 8
+    }
+  ],
+  "wires": []
+}

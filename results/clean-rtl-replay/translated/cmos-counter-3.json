@@ -1,0 +1,104 @@
+{
+  "done": [
+    "eq",
+    [
+      "var",
+      "count"
+    ],
+    [
+      "const",
+      3,
+      3
+    ]
+  ],
+  "horizon": 4,
+  "id": "cmos-counter-3",
+  "inputs": [
+    {
+      "name": "rst",
+      "values": [
+        0,
+        1
+      ],
+      "width": 1
+    },
+    {
+      "name": "en",
+      "values": [
+        0,
+        1
+      ],
+      "width": 1
+    }
+  ],
+  "registers": [
+    {
+      "cut": true,
+      "init": 0,
+      "name": "count",
+      "next": [
+        "mux",
+        [
+          "and",
+          [
+            "and",
+            [
+              "const",
+              1,
+              1
+            ],
+            [
+              "not",
+              [
+                "var",
+                "rst"
+              ]
+            ]
+          ],
+          [
+            "var",
+            "en"
+          ]
+        ],
+        [
+          "add",
+          [
+            "var",
+            "count"
+          ],
+          [
+            "const",
+            3,
+            1
+          ]
+        ],
+        [
+          "mux",
+          [
+            "and",
+            [
+              "const",
+              1,
+              1
+            ],
+            [
+              "var",
+              "rst"
+            ]
+          ],
+          [
+            "const",
+            3,
+            0
+          ],
+          [
+            "var",
+            "count"
+          ]
+        ]
+      ],
+      "width": 3
+    }
+  ],
+  "wires": []
+}

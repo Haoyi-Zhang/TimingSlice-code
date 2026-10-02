@@ -1,0 +1,37 @@
+{
+  "accounting_correction_semantic_units": 19,
+  "accounting_note": "Retrospective accounting correction for the retained 19-test run: the original 83-unit subtotal omitted ten accepted translation validations, eight recorded binding-mutation checks, and one independent source-byte substitution check. The historical full suite was not rerun for this correction; the affected translation path was rerun separately after repair.",
+  "counts": {
+    "accepted_translation_validations": 10,
+    "checker_semantic_obligations": 18,
+    "dynamic_negative_control_sample_checks": 55,
+    "operator_value_checks": 10,
+    "source_byte_substitution_checks": 1,
+    "structural_translation_comparison_units": 601,
+    "translation_binding_mutation_checks": 8
+  },
+  "errors": 0,
+  "failures": 0,
+  "historical_regression_semantic_units": 102,
+  "initial_full_run": {
+    "failure": "runtime-cache cleanliness assertion observed caches created by the active unittest process",
+    "passed_before_repair": 18,
+    "status": "FAIL",
+    "tests_run": 19
+  },
+  "original_reported_semantic_units": 83,
+  "post_fix_targeted_receipt": "results/translation-static-risk-postfix.json",
+  "repair_recheck": {
+    "semantic_units": 0,
+    "status": "PASS",
+    "stderr_file": "results/software-regression-repair.stderr.txt",
+    "stdout_file": "results/software-regression-repair.stdout.txt",
+    "test": "test_no_nested_archive_is_shipped"
+  },
+  "scope": "software regression; no minimization search or new scientific instance selection",
+  "semantic_units_this_run": 102,
+  "skipped": 0,
+  "status": "PASS",
+  "suite_definition_after_repair_tests": 21,
+  "tests_run": 19
+}

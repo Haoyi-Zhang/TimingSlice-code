@@ -1,0 +1,52 @@
+{
+  "artifact": {
+    "campaign_cumulative_semantic_work": 150022,
+    "campaign_remaining_semantic_work": 0,
+    "campaign_semantic_work_overrun": 22,
+    "case_files": 109,
+    "claim_ledger_rows": 28,
+    "external_resource_rows": 32,
+    "literature_calibration_classes": {
+      "adjacent-minimality-diagnosis": 5,
+      "closest-design-automation": 12,
+      "influential-formal-methods": 5
+    },
+    "literature_calibration_rows": 22,
+    "paper_data_reconciliation": true,
+    "public_rtl_sources": 10,
+    "python_sources_compile": true,
+    "retained_static_audit": true,
+    "software_regression_semantic_units": 102,
+    "software_regression_tests": 19,
+    "status": "PASS",
+    "targeted_translation_repair_semantic_units": 21,
+    "targeted_translation_repair_test_methods": 5
+  },
+  "paper": {
+    "abstract_words": 227,
+    "bibliography_entries": 56,
+    "cited_entries": 56,
+    "external_table_sources": 3,
+    "fonts_embedded": true,
+    "keywords": 6,
+    "latex_native_figures": 3,
+    "main_sections": 9,
+    "missing_citations": 0,
+    "page_size": "US Letter",
+    "pages": 12,
+    "recent_entries_with_stable_locator": 4,
+    "status": "PASS",
+    "uncited_entries": 0
+  },
+  "project": {
+    "private_path_markers": 0,
+    "root_entries": [
+      "CURRENT-STATE.md",
+      "artifact",
+      "paper",
+      "research-plan.md"
+    ],
+    "status": "PASS"
+  },
+  "status": "PASS"
+}

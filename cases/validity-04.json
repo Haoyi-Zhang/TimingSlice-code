@@ -1,0 +1,56 @@
+{
+  "done": [
+    "and",
+    [
+      "var",
+      "c"
+    ],
+    [
+      "and",
+      [
+        "var",
+        "u0"
+      ],
+      [
+        "not",
+        [
+          "var",
+          "u1"
+        ]
+      ]
+    ]
+  ],
+  "horizon": 0,
+  "id": "validity-04",
+  "inputs": [
+    {
+      "name": "u0",
+      "values": [
+        0,
+        1
+      ],
+      "width": 1
+    },
+    {
+      "name": "u1",
+      "values": [
+        0,
+        1
+      ],
+      "width": 1
+    }
+  ],
+  "registers": [],
+  "wires": [
+    {
+      "cut": true,
+      "expr": [
+        "const",
+        1,
+        0
+      ],
+      "name": "c",
+      "width": 1
+    }
+  ]
+}

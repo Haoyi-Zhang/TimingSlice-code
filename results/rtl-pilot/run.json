@@ -1,0 +1,11 @@
+{
+  "command": "python3 rtl-pilot.py --out <output-dir> --mode generate",
+  "command_normalized_for_release": true,
+  "cpu_seconds": 0.04995001499999996,
+  "exit_code": 0,
+  "failure": null,
+  "normalization_note": "Absolute scratch output path omitted from publication package; scientific inputs and retained outputs are unchanged.",
+  "peak_rss_kib": 94632,
+  "wall_seconds": 0.05172244499999579,
+  "worker_processes": 1
+}

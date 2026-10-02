@@ -1,0 +1,14 @@
+{
+  "accepted_source_subset": "restricted-single-clock-two-state",
+  "case": "asic-load-counter-8",
+  "clock_verified": true,
+  "completion_equation_verified": true,
+  "continuous_equations_verified": 0,
+  "cut_policy_verified": true,
+  "input_domains_verified": 4,
+  "module": "up_counter_load",
+  "register_equations_verified": 1,
+  "source_blob_verified": true,
+  "status": "ACCEPT",
+  "structural_comparison_units": 67
+}
