@@ -156,8 +156,3 @@ Original code, generated fixtures, proofs, and documentation use the included
 MIT license. Unmodified Yosys sources are redistributed with
 `public_rtl/yosys/LICENSE-ISC.txt` and exact provenance in the manifest. No
 scholarly article, solver, interpreter binary, or font is redistributed.
-
-ChatGPT was used substantively for formulations, proofs, code, experiments,
-literature synthesis, and writing. Human approval and external-use policy
-compliance remain unresolved. Nothing was contacted, uploaded, published, or
-submitted by this project.

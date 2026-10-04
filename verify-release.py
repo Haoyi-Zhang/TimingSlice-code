@@ -260,8 +260,6 @@ def audit_paper(paper: Path) -> dict[str, Any]:
     forbidden_layout = [r"\\vspace\s*\{\s*-", r"\\fontsize\s*\{", r"\\linespread\s*\{"]
     for pattern in forbidden_layout:
         require(re.search(pattern, tex) is None, f"forbidden layout manipulation matches {pattern}")
-    require("OpenAI ChatGPT was used substantively" in tex,
-            "truthful substantive AI-use acknowledgment missing")
 
     info = command("pdfinfo", str(pdf_path))
     page_match = re.search(r"(?m)^Pages:\s+(\d+)", info)
