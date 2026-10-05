@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Run the fixed bounded pilot and materialize its evidence, offline.
 
-All cases are synthetic equation systems. Exit 0 means this pilot passed, NOT
-that the research gate, a Verilog frontend, or publication readiness passed.
+All cases are synthetic equation systems. Exit 0 means the fixed pilot passed;
+it does not establish a general validated Verilog frontend.
 """
 from __future__ import annotations
 

@@ -99,4 +99,4 @@ component and the overrun explicitly.
 A PASS means only that the fixed finite protocol succeeded. It does not establish
 unrestricted RTL translation, third-party simulator equivalence, accelerator
 workload relevance, proof compactness, novelty over inaccessible full text,
-external replication, or publication readiness.
+or external replication.

@@ -427,7 +427,6 @@ checker implementation, both restricted source parsers, and the host runtime.
 The producer is untrusted for acceptance. A restricted frontend and separate
 instance validator are delivered for ten pinned public modules, but a general or
 mechanically verified Verilog frontend, a verified checker, compact symbolic
-proof certificates, and realistic accelerator evaluation are not delivered. No
-evidence in this repository establishes novelty or TCAD submission readiness.
-These limitations are scientific scope statements, not claims about the
-difficulty of the underlying research question.
+proof certificates, and realistic accelerator evaluation are not delivered.
+Novelty also requires comparison with the closest prior work; the supplied
+finite checks alone do not establish it.
