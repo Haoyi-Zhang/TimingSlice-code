@@ -16,7 +16,9 @@ are not proof-assistant mechanized.
 ## Reproduce from this repository root
 
 No package installation, solver, simulator, GPU, network access, API, or file
-outside this repository is required. Use Python 3 on a Unix-like system with
+outside this repository is required for the finite scientific runs. Paper-data
+and full-project audits additionally require the companion `paper/` directory.
+Use Python 3 on a Unix-like system with
 `resource` and `SIGALRM`; do not use Python `-O` because the assertions are
 intentional. Output directories must be absent or empty.
 
@@ -56,8 +58,35 @@ python3 verify-release.py --project-root .. \
   --out results/local-release-audit.json
 ```
 
-The retained full equation campaign and public generation are also reproducible,
-but repeating either would exceed the frozen cumulative campaign budget. Their
+The current software suite contains 27 methods. Six source-semantics methods
+cover 78 state/input contexts, seven source/IR validations, and two rejections
+of multiple procedural drivers. They repair default-item selection independent
+of textual position and keep same-block assignment priority distinct from
+cross-block races. The pinned ten translations and historical trace data are
+unchanged. A current run counts 191 semantic units; historical test receipts
+remain historical rather than being relabeled as this run.
+
+The flat artifact repository also includes `.github/workflows/scientific-checks.yml`:
+it runs the current software suite, retained audits, full finite core campaign,
+public replay, and direct checker under Ubuntu 24.04. Its scientific command
+group has a 240-second wall timeout, 180-second per-process CPU limit, and 1 GiB
+per-process virtual-memory limit. Raw output is uploaded even after failure.
+The completed Ubuntu 24.04/Python 3.12 run `37439368517` at head
+`d3e25e818f2abf6171de9aaee113d1410c9b2844` passes this workflow and the
+repository-integrity check. Its current suite passes all 27 methods (191 semantic
+units, 0.093 suite seconds). All 37 core result files, ten translations and ten
+validation records match the retained data. Public replay checks 4,965 samples
+and four retained bundles without repeating the historical minimization or
+public mutation campaign; those original negative controls remain retained.
+The separate receipts in `results/measurements/` record core and public-replay
+body wall/CPU times of 0.861/0.859 and 0.055/0.055 seconds and peak RSS of 20,828
+and 22,812 KiB. These are single-process, single-run observations, not total
+workflow timing or aggregate memory.
+
+The retained full equation campaign and public generation are also reproducible.
+Their original cumulative planning ceiling is already exceeded; later
+reproducibility runs are separate executions, not additions hidden in that
+frozen accounting. Their
 prior clean outputs and command receipts are retained in
 `results/clean-reproduction/` and `results/rtl-pilot/`:
 
@@ -140,17 +169,26 @@ change in the input environment. Inclusion minimality is relative to the final
 retained set, declared candidates, havoc abstraction, horizon, and observation;
 it is not minimum cardinality or program optimality.
 
-The corrected retained accounting reaches 149,999 semantic units before this
-review repair. The historical 19-test regression is 102 rather than 83 units:
+The corrected retained accounting reaches 149,999 semantic units before the
+earlier source-binding repair. The historical 19-test regression is 102 rather than 83 units:
 the old subtotal omitted ten accepted translation validations, eight recorded
 binding mutations, and one independent source-byte substitution check. Two
 actual pre-fix risk probes and the 21-unit post-fix targeted translation
 regression bring the executed total to 150,022, exceeding the 150,000 planning
-ceiling by 22. No historical minimization or large search was rerun. Internal
+ceiling by 22. That repair did not repeat historical minimization or large search. Internal
 translation-AST comparisons, parsing-only tests, compilation, documentation,
 rendering, and packaging are reported separately and not double-counted. See
 `pilot-protocol.md`, `results/campaign-accounting.json`, and
 `results/translation-static-risk-repair-summary.json`.
+
+The separate Windows/Python 3.12.14 review rerun reproduces the core summary and
+37 structured outputs (55,379 semantic units) and replays all ten public
+translations over 1,377 traces / 4,965 samples plus four retained bundles
+(5,803 units). The six new source-semantics methods contribute 87 units inside
+the 191-unit current suite. Historical timing/RSS values and the 150,022-unit
+campaign ledger are not replaced by these runs. The Windows runs use an
+external 45-second wall bound over the fixed finite inputs; they do not exercise
+the POSIX CLI resource policy or constitute remote CI.
 
 Original code, generated fixtures, proofs, and documentation use the included
 MIT license. Unmodified Yosys sources are redistributed with

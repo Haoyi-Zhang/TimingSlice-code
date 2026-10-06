@@ -100,3 +100,24 @@ A PASS means only that the fixed finite protocol succeeded. It does not establis
 unrestricted RTL translation, third-party simulator equivalence, accelerator
 workload relevance, proof compactness, novelty over inaccessible full text,
 or external replication.
+
+## Separate source-semantics review run
+
+Later reproducibility work is accounted separately from the retained 150,022-unit
+campaign and its 22-unit planning overrun. The Windows/Python 3.12.14 review
+reproduces the core summary and 37 structured outputs at 55,379 semantic units,
+and replays the ten public translations and four retained bundles at 5,803 units.
+The current 27-method software suite accounts for 191 units, including 87 from
+six new source-semantics methods: 78 finite state/input contexts, seven accepted
+source/IR validations, and two multiple-driver rejections. The owned pre/post
+defect probes, repeated checks, and static audits have separate raw receipts;
+they are not silently folded into the historical total or host measurements.
+
+The source cases check default selection against the complete explicit-label
+set, regardless of default position, and require one procedural driver per
+register. These are grammar/transition checks, not public accelerator instances.
+The local helper runs have a 45-second external wall limit and preserve their
+temporary evidence. They do not exercise POSIX CLI resource limits. The prepared
+Ubuntu 24.04 workflow encloses the complete scientific command group in a
+240-second wall bound with 1 GiB virtual memory and 180 CPU seconds per process;
+its actual remote outcome remains unmeasured until it runs.

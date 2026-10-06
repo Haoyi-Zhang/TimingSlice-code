@@ -16,7 +16,6 @@ import itertools
 import json
 import math
 from pathlib import Path
-import resource
 import signal
 import sys
 import time
@@ -325,6 +324,8 @@ def translation_negative_controls(
 
 
 def main() -> int:
+    # Importing the reviewed finite helpers does not run a POSIX campaign.
+    import resource
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument(

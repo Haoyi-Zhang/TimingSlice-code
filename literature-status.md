@@ -101,7 +101,11 @@ rechecked immediately before submission. Nothing was submitted or uploaded.
 ## Citation-closure audit
 
 `bibliography-audit.csv` contains one row for each of the 56 cited entries. It
-distinguishes 22 full-text-calibrated sources, authoritative metadata checks for
-recent or critical records, and canonical scholarly metadata review.
+distinguishes 21 cited entries with full-text calibration records, authoritative
+metadata checks for recent or critical records, and canonical scholarly metadata
+review. The 22-row calibration also includes QuickXplain, which is not cited in
+the manuscript; the calibration-row count is therefore not the count of
+full-text-calibrated bibliography entries. No citation is added just to make
+those counts equal.
 `results/bibliography-audit.json` confirms 56/56 cited entries, no missing keys,
 and no uncited padding.

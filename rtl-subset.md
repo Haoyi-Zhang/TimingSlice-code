@@ -19,7 +19,11 @@ expression, horizon, and candidate cut policy.
 - Identifiers, parentheses, unary `-`, `!`, and `~`; selected Boolean,
   comparison, addition, and subtraction operators; and ternary expressions.
 - `always @(posedge clock)` with nested or named `begin/end`, `if/else`, simple
-  priority `case`, and nonblocking assignments.
+  priority `case`, and nonblocking assignments. A default item is active only
+  when no explicit item matches, regardless of its textual position. Each
+  register has exactly one procedural driver; separate blocks may drive
+  disjoint registers. Repeated assignments within one block preserve the last
+  executed nonblocking assignment.
 - Constant declaration/`initial` assignments used by the fixed examples.
 - Direct continuous assignments to declared wires for the exercised case.
 - `assert`, `assume`, and `cover` statements are skipped because the translated
@@ -59,6 +63,15 @@ text plus matching altered IR cannot inherit the real source-byte hash, and an
 external empty candidate set plus matching `cut=false` IR cannot replace a
 manifest that still declares the register cuttable. These controls harden the
 validator; they do not show that the retained ten translations were erroneous.
+
+Six owned source-semantics regressions in `tests/test_source_semantics.py`
+cover default-first/middle/last selection, a nested conditional under an early
+default, explicit-label priority, same-block assignment order, and disjoint or
+conflicting procedural drivers. They check 78 state/input contexts through both
+IR interpreters, seven source/IR bindings, and two multiple-driver rejections.
+These checks repair a shared case-default mistake and exclude cross-block
+assignment races; they neither change the pinned translations nor establish
+general frontend correctness.
 
 A second path exhaustively enumerates every manifest trace through the horizon
 and compares the complete translated register vector and completion bit with

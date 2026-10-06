@@ -1,0 +1,57 @@
+name: Bounded scientific checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  finite-checks:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    env:
+      PYTHONUTF8: '1'
+      PYTHONDONTWRITEBYTECODE: '1'
+      README_ENTRY: 'README.md'
+      MIN_EXPECTED_PYTHON_SOURCES: '19'
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.12'
+      - name: Run the finite checks from the flat artifact repository root
+        shell: bash
+        run: |
+          set -euo pipefail
+          export CHECK_OUTPUT="$RUNNER_TEMP/p058-scientific-checks"
+          mkdir -p "$CHECK_OUTPUT"
+          # The timeout covers the whole command group; CPU/VM limits are
+          # inherited per-process limits, not an aggregate memory/CPU budget.
+          # All semantic assertions remain enabled; output is outside the checkout.
+          ulimit -v 1048576
+          ulimit -t 180
+          timeout --signal=TERM --kill-after=5s 240s bash -euo pipefail <<'CHECKS' 2>&1 | tee "$CHECK_OUTPUT/raw-output.txt"
+          python -B .github/scripts/check_repository.py
+          python -B run-tests.py --out "$CHECK_OUTPUT/software-regression.json"
+          python -B verify-retained.py --out "$CHECK_OUTPUT/retained-audit.json"
+          python -B verify-release.py --out "$CHECK_OUTPUT/artifact-audit.json"
+          python -B reproduce.py --out "$CHECK_OUTPUT/core"
+          python -B rtl-pilot.py --mode replay --bundle-dir results/rtl-pilot/bundles --out "$CHECK_OUTPUT/rtl-replay"
+          python -B -m src.checker cases/post-completion.json results/clean-reproduction/example.json --limit 100000
+          # These are finite reproducibility gates, not a mechanized proof or a
+          # replacement for the frozen historical campaign accounting.
+          CHECKS
+      - name: Retain raw output on success, failure, or timeout
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: p058-scientific-checks
+          path: ${{ runner.temp }}/p058-scientific-checks
+          if-no-files-found: warn
+          retention-days: 14

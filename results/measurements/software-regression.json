@@ -1,0 +1,26 @@
+{
+  "counts": {
+    "accepted_translation_validations": 10,
+    "checker_semantic_obligations": 18,
+    "detached_source_text_joint_substitution_checks": 1,
+    "dynamic_negative_control_sample_checks": 55,
+    "external_cuttable_joint_substitution_checks": 1,
+    "operator_value_checks": 10,
+    "source_byte_substitution_checks": 1,
+    "source_case_transition_contexts": 78,
+    "source_case_translation_validations": 7,
+    "source_procedural_driver_rejections": 2,
+    "structural_translation_comparison_units": 601,
+    "translation_binding_mutation_checks": 8
+  },
+  "errors": 0,
+  "failures": 0,
+  "historical_regression_semantic_units": 102,
+  "new_targeted_repair_semantic_units": 89,
+  "scope": "software regression including owned source-semantics fixtures; no minimization search or public workload selection",
+  "semantic_units_this_run": 191,
+  "skipped": 0,
+  "status": "PASS",
+  "tests_run": 27,
+  "wall_seconds": 0.17186862100000155
+}

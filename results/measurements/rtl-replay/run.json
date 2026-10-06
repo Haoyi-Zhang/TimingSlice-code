@@ -1,0 +1,9 @@
+{
+  "command": "python3 rtl-pilot.py --out /home/runner/work/_temp/p058-scientific-checks/rtl-replay --mode replay --bundle-dir results/rtl-pilot/bundles",
+  "cpu_seconds": 0.054987165000000005,
+  "exit_code": 0,
+  "failure": null,
+  "peak_rss_kib": 22812,
+  "wall_seconds": 0.05542852099999607,
+  "worker_processes": 1
+}

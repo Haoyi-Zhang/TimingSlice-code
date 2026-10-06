@@ -243,12 +243,15 @@ def _case(cursor: Cursor, outer: VExpr, updates: list[VUpdate]) -> None:
     cursor.take(")")
     previous = VExpr("constant", (1, 0))
     default_seen = False
+    default_condition = None
+    fallback_updates: list[VUpdate] = []
     while cursor.look() != "endcase":
         if cursor.maybe("default"):
             if default_seen:
                 raise TranslationValidationError("duplicate default")
             default_seen = True
             active = _not(previous)
+            default_condition = active
         else:
             labels = [_expression(cursor)]
             while cursor.maybe(","):
@@ -259,8 +262,20 @@ def _case(cursor: Cursor, outer: VExpr, updates: list[VUpdate]) -> None:
             active = _and(raw, _not(previous))
             previous = _or(previous, raw)
         cursor.take(":")
+        start = len(updates)
         _statement(cursor, _and(outer, active), updates)
+        if active is default_condition:
+            fallback_updates.extend(updates[start:])
     cursor.take("endcase")
+    # Default means no explicit item matches, even if it precedes an item.
+    def complete_fallback(node: VExpr) -> VExpr:
+        if node is default_condition:
+            return _not(previous)
+        children = tuple(complete_fallback(child) if isinstance(child, VExpr) else child
+                         for child in node.children)
+        return VExpr(node.tag, children)
+    for update in fallback_updates:
+        update.condition = complete_fallback(update.condition)
 
 
 def _statement(cursor: Cursor, condition: VExpr, updates: list[VUpdate]) -> None:
@@ -323,6 +338,7 @@ def _parse_source(source: str, module_name: str) -> VModule:
     clocks: set[str] = set()
     updates: list[VUpdate] = []
     continuous: list[tuple[str, VExpr]] = []
+    block_targets: set[str] = set()
     while cursor.look() != "endmodule":
         item = cursor.look()
         if item in ("input", "output", "reg", "wire"):
@@ -349,7 +365,12 @@ def _parse_source(source: str, module_name: str) -> VModule:
             cursor.take("posedge")
             clocks.add(cursor.take())
             cursor.take(")")
+            start = len(updates)
             _statement(cursor, VExpr("constant", (1, 1)), updates)
+            new_targets = {update.target for update in updates[start:]}
+            if not block_targets.isdisjoint(new_targets):
+                raise TranslationValidationError("register has more than one procedural driver")
+            block_targets.update(new_targets)
         elif item in ("assert", "assume", "cover"):
             cursor.discard_through(";")
         else:

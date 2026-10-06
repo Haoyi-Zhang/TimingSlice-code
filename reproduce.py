@@ -12,7 +12,6 @@ import copy
 import csv
 import itertools
 import json
-import resource
 import signal
 import sys
 import time
@@ -371,6 +370,8 @@ def run(out: Path) -> dict:
 
 
 def main() -> int:
+    # POSIX limits belong to this CLI, not to the importable finite helpers.
+    import resource
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args()

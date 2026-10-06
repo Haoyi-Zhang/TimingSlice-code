@@ -1,0 +1,217 @@
+{
+  "check": "repository-material-integrity",
+  "python_sources_parsed": 21,
+  "research_sources_present": 20,
+  "minimum_supplied_sources": 19,
+  "usage_document_present": true,
+  "errors": [],
+  "scope": "Documentation and source/configuration integrity only. Research programs, proofs and experiments are not executed."
+}
+test_claim_ledger_has_evidence_and_maturity_for_every_row (test_artifact.ArtifactClosureTests.test_claim_ledger_has_evidence_and_maturity_for_every_row) ... ok
+test_no_nested_archive_is_shipped (test_artifact.ArtifactClosureTests.test_no_nested_archive_is_shipped) ... ok
+test_required_standalone_files_exist (test_artifact.ArtifactClosureTests.test_required_standalone_files_exist) ... ok
+test_retained_mutation_receipts_have_expected_outcomes (test_artifact.ArtifactClosureTests.test_retained_mutation_receipts_have_expected_outcomes) ... ok
+test_retained_static_audit_passes (test_artifact.ArtifactClosureTests.test_retained_static_audit_passes) ... ok
+test_missing_initial_pair_is_rejected (test_core.CertificateRegressionTests.test_missing_initial_pair_is_rejected) ... ok
+test_tampered_output_program_is_rejected (test_core.CertificateRegressionTests.test_tampered_output_program_is_rejected) ... ok
+test_three_small_retained_bundles_accept (test_core.CertificateRegressionTests.test_three_small_retained_bundles_accept) ... ok
+test_zero_budget_is_unknown_not_rejected (test_core.CertificateRegressionTests.test_zero_budget_is_unknown_not_rejected) ... ok
+test_duplicate_json_keys_are_rejected (test_core.ExpressionAndModelTests.test_duplicate_json_keys_are_rejected) ... ok
+test_fixture_generator_matches_all_stored_models (test_core.ExpressionAndModelTests.test_fixture_generator_matches_all_stored_models) ... ok
+test_malformed_expressions_are_rejected_by_both_parsers (test_core.ExpressionAndModelTests.test_malformed_expressions_are_rejected_by_both_parsers) ... ok
+test_models_snapshot_caller_data (test_core.ExpressionAndModelTests.test_models_snapshot_caller_data) ... ok
+test_small_cross_interpreter_operator_set (test_core.ExpressionAndModelTests.test_small_cross_interpreter_operator_set) ... ok
+test_all_pinned_blobs_and_translations_validate (test_rtl.RestrictedRTLTests.test_all_pinned_blobs_and_translations_validate) ... ok
+test_eight_binding_mutations_are_rejected (test_rtl.RestrictedRTLTests.test_eight_binding_mutations_are_rejected) ... ok
+test_manifest_scope_and_license_are_explicit (test_rtl.RestrictedRTLTests.test_manifest_scope_and_license_are_explicit) ... ok
+test_three_dynamic_mistranslations_are_detected (test_rtl.RestrictedRTLTests.test_three_dynamic_mistranslations_are_detected) ... ok
+test_validator_rejects_detached_source_text_with_matching_ir (test_rtl.RestrictedRTLTests.test_validator_rejects_detached_source_text_with_matching_ir)
+Changing detached text and IR cannot inherit the real source-byte hash. ... ok
+test_validator_rejects_external_cuttable_with_matching_ir (test_rtl.RestrictedRTLTests.test_validator_rejects_external_cuttable_with_matching_ir)
+The manifest candidate universe cannot be replaced by caller policy plus IR. ... ok
+test_validator_rejects_source_byte_substitution (test_rtl.RestrictedRTLTests.test_validator_rejects_source_byte_substitution) ... ok
+test_default_first_middle_and_last_preserve_selection_and_holds (test_source_semantics.SourceSelectionTests.test_default_first_middle_and_last_preserve_selection_and_holds) ... ok
+test_first_matching_explicit_label_retains_priority (test_source_semantics.SourceSelectionTests.test_first_matching_explicit_label_retains_priority) ... ok
+test_last_nonblocking_assignment_within_one_block_still_wins (test_source_semantics.SourceSelectionTests.test_last_nonblocking_assignment_within_one_block_still_wins) ... ok
+test_nested_if_inside_early_default_keeps_outer_case_guard (test_source_semantics.SourceSelectionTests.test_nested_if_inside_early_default_keeps_outer_case_guard) ... ok
+test_separate_blocks_with_disjoint_targets_are_allowed (test_source_semantics.SourceSelectionTests.test_separate_blocks_with_disjoint_targets_are_allowed) ... ok
+test_two_blocks_driving_one_register_are_rejected_by_both_paths (test_source_semantics.SourceSelectionTests.test_two_blocks_driving_one_register_are_rejected_by_both_paths) ... ok
+
+----------------------------------------------------------------------
+Ran 27 tests in 0.093s
+
+OK
+{
+  "counts": {
+    "accepted_translation_validations": 10,
+    "checker_semantic_obligations": 18,
+    "detached_source_text_joint_substitution_checks": 1,
+    "dynamic_negative_control_sample_checks": 55,
+    "external_cuttable_joint_substitution_checks": 1,
+    "operator_value_checks": 10,
+    "source_byte_substitution_checks": 1,
+    "source_case_transition_contexts": 78,
+    "source_case_translation_validations": 7,
+    "source_procedural_driver_rejections": 2,
+    "structural_translation_comparison_units": 601,
+    "translation_binding_mutation_checks": 8
+  },
+  "errors": 0,
+  "failures": 0,
+  "historical_regression_semantic_units": 102,
+  "new_targeted_repair_semantic_units": 89,
+  "scope": "software regression including owned source-semantics fixtures; no minimization search or public workload selection",
+  "semantic_units_this_run": 191,
+  "skipped": 0,
+  "status": "PASS",
+  "tests_run": 27,
+  "wall_seconds": 0.17186862100000155
+}
+{
+  "boundary": "static closure audit only; mathematical and semantic claims rely on retained runs",
+  "core_fixture_files": 109,
+  "core_retained_summary_verified": {
+    "canonical_control_witnesses_checked": 35,
+    "closed_form_transition_pairs": 5401,
+    "invalid_mutations_rejected": 16,
+    "operator_value_checks": 2410,
+    "reduction_subset_queries": 928,
+    "unique_generated_models": 109,
+    "unknown_budget_controls": 2
+  },
+  "final_cumulative_semantic_work": 150022,
+  "post_fix_targeted_semantic_units": 21,
+  "post_fix_targeted_test_methods": 5,
+  "public_manifest_rows": 10,
+  "public_retained_bundles": 4,
+  "public_translation_rows": 10,
+  "scientific_search_repeated": false,
+  "semantic_work_overrun": 22,
+  "software_regression_semantic_units": 102,
+  "software_regression_tests": 19,
+  "status": "PASS"
+}
+{
+  "artifact": {
+    "campaign_cumulative_semantic_work": 150022,
+    "campaign_remaining_semantic_work": 0,
+    "campaign_semantic_work_overrun": 22,
+    "case_files": 109,
+    "claim_ledger_rows": 28,
+    "external_resource_rows": 32,
+    "literature_calibration_classes": {
+      "adjacent-minimality-diagnosis": 5,
+      "closest-design-automation": 12,
+      "influential-formal-methods": 5
+    },
+    "literature_calibration_rows": 22,
+    "paper_data_reconciliation": true,
+    "public_rtl_sources": 10,
+    "python_sources_compile": true,
+    "retained_static_audit": true,
+    "software_regression_semantic_units": 102,
+    "software_regression_tests": 19,
+    "status": "PASS",
+    "targeted_translation_repair_semantic_units": 21,
+    "targeted_translation_repair_test_methods": 5
+  },
+  "status": "PASS"
+}
+{
+  "canonical_control_witnesses_checked": 35,
+  "claims_not_established": [
+    "novelty over the exact anchor and closest literature",
+    "Verilog-to-IR semantic preservation",
+    "public accelerator applicability",
+    "unbounded-cycle equivalence",
+    "minimum-cardinality optimizer",
+    "RTL-simulator speedup",
+    "mechanized proof of the checker",
+    "complete venue calibration",
+    "TCAD readiness"
+  ],
+  "closed_form_transition_pairs": 5401,
+  "control_bundles_checked": 26,
+  "fixed_retained_set_baselines_checked": 1,
+  "generated_control_models": 13,
+  "generated_reduction_models": 96,
+  "invalid_mutations_rejected": 16,
+  "mutation_checks": 19,
+  "operator_value_checks": 2410,
+  "pilot_status": "PASS",
+  "public_rtl_modules": 0,
+  "reduction_conditions_checked": 96,
+  "reduction_subset_queries": 928,
+  "research_gate": "HOLD",
+  "retained_equation_regression_checks": 1,
+  "semantic_work": {
+    "checker": 14624,
+    "closed_form_oracle": 14180,
+    "producer": 26575
+  },
+  "sound_superset_accepted": true,
+  "stored_fixture_models_matched": 109,
+  "total_semantic_work": 55379,
+  "unique_generated_models": 109,
+  "unknown_budget_controls": 2,
+  "wider_choice_masks": [
+    0,
+    15,
+    16,
+    17,
+    18,
+    19,
+    52,
+    53,
+    54,
+    55,
+    88,
+    89,
+    90,
+    91,
+    92,
+    125,
+    126,
+    127,
+    128,
+    162,
+    163,
+    164,
+    165,
+    198,
+    199,
+    200,
+    201,
+    235,
+    236,
+    237,
+    238,
+    255
+  ]
+}
+{
+  "checker_semantic_obligations": 828,
+  "dynamic_negative_control_sample_checks": 0,
+  "dynamic_translation_mutations_detected": 0,
+  "first_completion_bundles_checked": 4,
+  "full_state_and_done_sample_checks": 4965,
+  "mode": "replay",
+  "not_established": [
+    "unrestricted Verilog/SystemVerilog parsing",
+    "mechanized correctness of either source parser",
+    "accelerator workload coverage",
+    "physical timing or simulation speedup"
+  ],
+  "producer_semantic_obligations_executed": 0,
+  "public_rtl_modules": 10,
+  "retained_producer_semantic_obligations": 8556,
+  "scope": "fixed Yosys sources in a documented restricted single-clock two-state subset; finite transaction harnesses",
+  "source_blobs_independently_verified": 10,
+  "status": "PASS",
+  "structural_translation_comparison_units": 601,
+  "total_semantic_units": 5803,
+  "translation_binding_mutations_rejected": 0,
+  "translation_validation_obligations": 10,
+  "translation_validator_mutation_checks": 0
+}
+{"accepted": true, "claim": "inclusion-minimal", "work": {"limit": 100000, "observations": 198, "successors": 337}}

@@ -51,6 +51,20 @@ def git_blob_sha(data: bytes) -> str:
     return hashlib.sha1(f"blob {len(data)}\0".encode("ascii") + data).hexdigest()
 
 
+def forbidden_payload_paths(root: Path) -> list[str]:
+    """Check delivered content, not the outer checkout's Git metadata."""
+    forbidden = []
+    for path in root.rglob("*"):
+        relative = path.relative_to(root)
+        if relative.parts[0] == '.git':
+            continue
+        if path.name in {"__pycache__", ".git", ".pytest_cache", ".coverage"}:
+            forbidden.append(relative.as_posix())
+        elif path.is_file() and path.suffix in {".pyc", ".zip"}:
+            forbidden.append(relative.as_posix())
+    return forbidden
+
+
 def audit_artifact(root: Path) -> dict[str, Any]:
     required_files = {
         "README.md", "LICENSE", "ir-contract.md", "rtl-subset.md",
@@ -65,26 +79,19 @@ def audit_artifact(root: Path) -> dict[str, Any]:
     require(required_files <= present, f"artifact required files missing: {sorted(required_files - present)}")
     require(required_dirs <= present, f"artifact required directories missing: {sorted(required_dirs - present)}")
 
-    forbidden = []
-    for path in root.rglob("*"):
-        if path.name in {"__pycache__", ".git", ".pytest_cache", ".coverage"}:
-            forbidden.append(path.relative_to(root).as_posix())
-        elif path.is_file() and path.suffix in {".pyc", ".zip"}:
-            forbidden.append(path.relative_to(root).as_posix())
+    forbidden = forbidden_payload_paths(root)
     require(not forbidden, f"forbidden runtime/archive files: {forbidden}")
 
-    compile_result = subprocess.run(
-        ["python3", "-m", "compileall", "-q", "src", "tests", "reproduce.py",
-         "rtl-pilot.py", "run-tests.py", "verify-retained.py", "verify-release.py",
-         "verify-paper-data.py", "audit-bibliography.py"],
-        cwd=root, capture_output=True, text=True, check=False,
-    )
-    require(compile_result.returncode == 0, f"Python compile failure: {compile_result.stderr}")
-    # compileall creates caches; remove them so an audit does not dirty a clean tree.
-    for cache in sorted(root.rglob("__pycache__"), reverse=True):
-        for item in cache.iterdir():
-            item.unlink()
-        cache.rmdir()
+    # Check syntax without writing bytecode or deleting any checkout paths.
+    # compileall writes .pyc even under -B, so it is not a read-only audit.
+    sources = sorted(root.glob("*.py"))
+    sources += sorted((root / "src").rglob("*.py"))
+    sources += sorted((root / "tests").rglob("*.py"))
+    for source in sources:
+        try:
+            compile(source.read_bytes(), str(source), "exec")
+        except (SyntaxError, ValueError) as error:
+            raise ReleaseAuditError(f"Python compile failure in {source}: {error}") from error
 
     retained = read_json(root / "results" / "final-retained-audit.json")
     require(retained.get("status") == "PASS", "retained static audit is not PASS")

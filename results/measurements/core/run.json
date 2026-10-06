@@ -1,0 +1,11 @@
+{
+  "address_space_limit_bytes": 1073741824,
+  "command": "python3 reproduce.py --out /home/runner/work/_temp/p058-scientific-checks/core",
+  "cpu_limit_seconds": 90,
+  "cpu_seconds": 0.858863572,
+  "exit_code": 0,
+  "failure": null,
+  "peak_rss_kib": 20828,
+  "wall_seconds": 0.8609070720000034,
+  "worker_processes": 1
+}

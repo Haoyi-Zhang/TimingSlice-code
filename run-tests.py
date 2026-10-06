@@ -31,6 +31,9 @@ def main() -> int:
     repair_semantic_keys = {
         "detached_source_text_joint_substitution_checks",
         "external_cuttable_joint_substitution_checks",
+        "source_case_translation_validations",
+        "source_case_transition_contexts",
+        "source_procedural_driver_rejections",
     }
     historical_semantic_units = sum(COUNTS[key] for key in historical_semantic_keys)
     repair_semantic_units = sum(COUNTS[key] for key in repair_semantic_keys)
@@ -46,7 +49,7 @@ def main() -> int:
         "historical_regression_semantic_units": historical_semantic_units,
         "new_targeted_repair_semantic_units": repair_semantic_units,
         "semantic_units_this_run": semantic_units,
-        "scope": "software regression; no minimization search or new scientific instance selection",
+        "scope": "software regression including owned source-semantics fixtures; no minimization search or public workload selection",
     }
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")

@@ -273,12 +273,15 @@ def parse_case(stream: Stream, guard: Expr, out: list[Assignment]) -> None:
     stream.pop(")")
     prior = Expr("const", (1, 0))
     saw_default = False
+    default_match = None
+    default_updates: list[Assignment] = []
     while stream.peek() != "endcase":
         if stream.accept("default"):
             if saw_default:
                 raise FrontendError("duplicate default case")
             saw_default = True
             match = expr_not(prior)
+            default_match = match
         else:
             labels = [parse_expr(stream)]
             while stream.accept(","):
@@ -289,8 +292,20 @@ def parse_case(stream: Stream, guard: Expr, out: list[Assignment]) -> None:
             match = expr_and(raw_match, expr_not(prior))
             prior = expr_or(prior, raw_match)
         stream.pop(":")
+        before = len(out)
         parse_statement(stream, expr_and(guard, match), out)
+        if match is default_match:
+            default_updates.extend(out[before:])
     stream.pop("endcase")
+    # A default is selected only if *all* explicit labels fail, independent of
+    # its textual position. Bind it after collecting the complete label set.
+    def bind_default(expr: Expr) -> Expr:
+        if expr is default_match:
+            return expr_not(prior)
+        return Expr(expr.op, tuple(bind_default(a) if isinstance(a, Expr) else a
+                                  for a in expr.args))
+    for assignment in default_updates:
+        assignment.guard = bind_default(assignment.guard)
 
 
 def parse_statement(stream: Stream, guard: Expr, out: list[Assignment]) -> None:
@@ -356,6 +371,7 @@ def parse_module(text: str, module_name: str) -> Module:
     clocks: set[str] = set()
     assignments: list[Assignment] = []
     continuous: list[Continuous] = []
+    procedural_drivers: set[str] = set()
     while stream.peek() != "endmodule":
         tok = stream.peek()
         if tok in ("input", "output", "reg", "wire"):
@@ -386,7 +402,12 @@ def parse_module(text: str, module_name: str) -> Module:
             clock = stream.pop()
             stream.pop(")")
             clocks.add(clock)
+            before = len(assignments)
             parse_statement(stream, Expr("const", (1, 1)), assignments)
+            driven_here = {item.target for item in assignments[before:]}
+            if procedural_drivers & driven_here:
+                raise FrontendError("multiple procedural blocks drive the same register")
+            procedural_drivers |= driven_here
         elif tok in ("assert", "assume", "cover"):
             stream.skip_to(";")
         else:
