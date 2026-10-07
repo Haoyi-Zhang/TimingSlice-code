@@ -39,6 +39,8 @@ jobs:
           timeout --signal=TERM --kill-after=5s 240s bash -euo pipefail <<'CHECKS' 2>&1 | tee "$CHECK_OUTPUT/raw-output.txt"
           python -B .github/scripts/check_repository.py
           python -B run-tests.py --out "$CHECK_OUTPUT/software-regression.json"
+          python -B tests/successor_regression.py
+          python -B tests/paper_data_regression.py
           python -B verify-retained.py --out "$CHECK_OUTPUT/retained-audit.json"
           python -B verify-release.py --out "$CHECK_OUTPUT/artifact-audit.json"
           python -B reproduce.py --out "$CHECK_OUTPUT/core"

@@ -47,6 +47,8 @@ The standard-library software regression suite and release audits are:
 
 ```sh
 python3 run-tests.py --out results/local-software-regression.json
+python3 -B tests/successor_regression.py
+python3 -B tests/paper_data_regression.py
 python3 audit-bibliography.py \
   --tex ../paper/main.tex --bib ../paper/references.bib \
   --calibration literature-calibration.csv \
@@ -65,6 +67,30 @@ of textual position and keep same-block assignment priority distinct from
 cross-block races. The pinned ten translations and historical trace data are
 unchanged. A current run counts 191 semantic units; historical test receipts
 remain historical rather than being relabeled as this run.
+
+`tests/successor_regression.py` separately runs four additional pure finite
+regression groups and is an explicit scientific-CI step. Its reference enumerates
+complete tiny input/cut prefixes without merging histories, checking preservation,
+canonical witnesses, exclusion rows and charged semantic counts. The equation
+checker now lazily evaluates the deterministic source successor once per
+progressing frontier row/input, locally in each closure loop. It still enumerates
+every omitted-wire/next-register valuation and charges every observation and
+successor. Final and stopped first-hit branches do not evaluate a successor;
+failed edge charges precede evaluation. No shared producer cache, changed proof
+obligation, new workload guarantee or measured speedup is claimed. These tests
+are separate from the 27-method suite and frozen campaign receipts; assertions
+remain enabled.
+
+`tests/paper_data_regression.py` is a separate eight-method pure static-gate
+regression and an explicit scientific-CI step. Its owned in-memory fixtures
+check current manuscript accounting, integer-only retained component totals,
+the 150,022/150,000/22 overrun, and unchanged figure/table, mutation/UNKNOWN and
+bibliography rejection paths against independent arithmetic. It imports no
+scientific producer/checker, creates no result files, and adds no semantic-work
+units to frozen campaign receipts. `verify-paper-data.py` now binds the current
+accounting sentence to that ledger instead of requiring an obsolete historical
+subtotal sentence. This is static reconciliation, not a repeated scientific run
+or source/PDF synchronization claim.
 
 The flat artifact repository also includes `.github/workflows/scientific-checks.yml`:
 it runs the current software suite, retained audits, full finite core campaign,

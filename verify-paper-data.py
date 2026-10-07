@@ -45,6 +45,52 @@ def normalize_tex(text: str) -> str:
     return re.sub(r"\s+", " ", text.replace("\\,", ",")).strip()
 
 
+def reconcile_campaign(accounting: Any, main_tex: str) -> dict[str, int]:
+    """Bind the current accounting sentence to the frozen retained campaign."""
+    require(isinstance(accounting, dict), "campaign accounting is not an object")
+    stages = {
+        "core_campaign_semantic_work": 120045,
+        "earlier_public_rtl_development_semantic_work": 4538,
+        "earlier_public_rtl_clean_semantic_work": 4538,
+        "expanded_public_rtl_generation_semantic_work": 14422,
+        "expanded_public_rtl_clean_replay_semantic_work": 5803,
+        "final_core_checker_replay_semantic_work": 535,
+        "pre_release_small_checker_probe_semantic_work": 16,
+        "software_regression_semantic_work": 102,
+    }
+    expected = {
+        **stages,
+        "historical_campaign_after_accounting_correction": 149999,
+        "translation_static_risk_pre_fix_semantic_work": 2,
+        "translation_static_risk_post_fix_semantic_work": 21,
+        "cumulative_semantic_work": 150022,
+        "campaign_semantic_work_cap": 150000,
+        "remaining_semantic_work": 0,
+        "semantic_work_overrun": 22,
+    }
+    for field, value in expected.items():
+        require(type(accounting.get(field)) is int and accounting[field] == value,
+                f"retained campaign accounting differs: {field}")
+    historical = sum(accounting[field] for field in stages)
+    total = historical + accounting["translation_static_risk_pre_fix_semantic_work"] + \
+        accounting["translation_static_risk_post_fix_semantic_work"]
+    ceiling = accounting["campaign_semantic_work_cap"]
+    overrun = accounting["semantic_work_overrun"]
+    require(historical == accounting["historical_campaign_after_accounting_correction"] and
+            total == accounting["cumulative_semantic_work"] and total - ceiling == overrun,
+            "retained campaign component arithmetic does not close")
+    require(accounting.get("historical_large_search_repeated_for_repair") is False and
+            accounting.get("ceiling_status") == "EXCEEDED_BY_22_TARGETED_REPAIR_VALIDATIONS",
+            "retained campaign repair/overrun boundary changed")
+    statement = (
+        f"The retained campaign totals {total:,} units, including its source-validation "
+        f"probes and regressions, exceeding the {ceiling:,} planning ceiling by {overrun} units."
+    )
+    require(statement in main_tex, "paper retained campaign accounting sentence differs")
+    return {"historical_subtotal": historical, "executed_total": total,
+            "planning_ceiling": ceiling, "overrun": overrun}
+
+
 def audit(root: Path, project: Path) -> dict[str, Any]:
     paper = project / "paper"
     results = root / "results" / "clean-reproduction"
@@ -152,9 +198,7 @@ def audit(root: Path, project: Path) -> dict[str, Any]:
             "paper no longer states the exact rejected-mutation count")
     require("two zero-budget controls return UNKNOWN" in main_tex,
             "paper no longer states the exact UNKNOWN controls")
-    require("149,999" in main_tex and "150,022" in main_tex and
-            "22 above" in main_tex,
-            "paper corrected campaign accounting text is missing")
+    campaign = reconcile_campaign(read_json(root / "results" / "campaign-accounting.json"), main_tex)
 
     bibliography = read_json(root / "results" / "bibliography-audit.json")
     require(bibliography.get("status") == "PASS" and bibliography.get("entries") == 56,
@@ -174,6 +218,7 @@ def audit(root: Path, project: Path) -> dict[str, Any]:
         },
         "bibliography_entries_reconciled": 56,
         "campaign_accounting_text_reconciled": True,
+        "retained_campaign_accounting": campaign,
     }
 
 

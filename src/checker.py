@@ -250,10 +250,12 @@ def preservation(m: Semantics, c: Any, meter: Meter) -> None:
     layers = frontiers(m, c["frontiers"], m.horizon)
     require((m.initial, m.initial) in layers[0], "initial pair omitted")
     wc, rc = m.free(k, "wires"), m.free(k, "registers")
+    uncomputed = object()
     for t, layer in enumerate(layers):
         for pair in layer:
             for u in m.domain():
                 ds, source = m.frame(pair[0], u, {})
+                source_next = uncomputed
                 for wv in values(wc):
                     meter.use()
                     cut = dict(zip([n for n, _ in wc], wv))
@@ -263,7 +265,9 @@ def preservation(m: Semantics, c: Any, meter: Meter) -> None:
                     for rv in values(rc):
                         meter.use(True)
                         cut.update(dict(zip([n for n, _ in rc], rv)))
-                        target = (m.next_state(source, {}), m.next_state(abstract, cut))
+                        if source_next is uncomputed:
+                            source_next = m.next_state(source, {})
+                        target = (source_next, m.next_state(abstract, cut))
                         require(target in layers[t + 1], "uncovered successor")
 
 
@@ -309,6 +313,7 @@ def canonical(m: Semantics, c: dict, meter: Meter) -> None:
     layers = frontiers(m, c["predecessors"]["frontiers"], d, True)
     require((m.initial, m.initial, 0, 0) in layers[0], "initial ordered pair omitted")
     wc, rc = m.free(k, "wires"), m.free(k, "registers")
+    uncomputed = object()
     for t, layer in enumerate(layers):
         target_u = tuple(c["inputs"][t])
         free = wc + (rc if t < d else [])
@@ -316,6 +321,7 @@ def canonical(m: Semantics, c: dict, meter: Meter) -> None:
         for s, a, si, sj in layer:
             for u in m.domain():
                 ds, se = m.frame(s, u, {})
+                source_next = uncomputed
                 sign_i = order_sign(si, u, target_u)
                 for wv in values(wc):
                     meter.use()
@@ -332,7 +338,9 @@ def canonical(m: Semantics, c: dict, meter: Meter) -> None:
                         meter.use(True)
                         cut.update(dict(zip([n for n, _ in rc], rv)))
                         sign_c = order_sign(sj, wv + rv, target_v)
-                        target = (m.next_state(se, {}), m.next_state(ae, cut), sign_i, sign_c)
+                        if source_next is uncomputed:
+                            source_next = m.next_state(se, {})
+                        target = (source_next, m.next_state(ae, cut), sign_i, sign_c)
                         require(target in layers[t + 1], "ordered-prefix successor omitted")
 
 
