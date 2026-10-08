@@ -60,7 +60,8 @@ python3 verify-release.py --project-root .. \
   --out results/local-release-audit.json
 ```
 
-The current software suite contains 27 methods. Six source-semantics methods
+The software suite contains 29 methods, including two literal-width regressions.
+Six source-semantics methods
 cover 78 state/input contexts, seven source/IR validations, and two rejections
 of multiple procedural drivers. They repair default-item selection independent
 of textual position and keep same-block assignment priority distinct from
@@ -78,7 +79,7 @@ every omitted-wire/next-register valuation and charges every observation and
 successor. Final and stopped first-hit branches do not evaluate a successor;
 failed edge charges precede evaluation. No shared producer cache, changed proof
 obligation, new workload guarantee or measured speedup is claimed. These tests
-are separate from the 27-method suite and frozen campaign receipts; assertions
+are separate from the 29-method suite and retained campaign receipts; assertions
 remain enabled.
 
 `tests/paper_data_regression.py` is a separate eight-method pure static-gate
@@ -99,7 +100,7 @@ group has a 240-second wall timeout, 180-second per-process CPU limit, and 1 GiB
 per-process virtual-memory limit. Raw output is uploaded even after failure.
 The completed Ubuntu 24.04/Python 3.12 run `37439368517` at head
 `d3e25e818f2abf6171de9aaee113d1410c9b2844` passes this workflow and the
-repository-integrity check. Its current suite passes all 27 methods (191 semantic
+repository-integrity check. That recorded run passes all 27 methods (191 semantic
 units, 0.093 suite seconds). All 37 core result files, ten translations and ten
 validation records match the retained data. Public replay checks 4,965 samples
 and four retained bundles without repeating the historical minimization or
