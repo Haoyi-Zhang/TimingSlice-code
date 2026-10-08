@@ -404,12 +404,15 @@ def _compile_source(expression: VExpr, widths: dict[str, int],
         return _variable(name), widths[name], 1
     if tag == "constant":
         width, value = expression.children
+        if width is None and expected is not None and int(value) >= 2 ** expected:
+            raise TranslationValidationError("unsized decimal exceeds the supported context width")
         width = expected if width is None else width
         if width is None:
             width = max(1, int(value).bit_length())
         return _constant(width, int(value)), width, 1
     if tag in ("negative", "bit-not", "logical-not"):
-        child, child_width, nodes = _compile_source(expression.children[0], widths, expected)
+        child, child_width, nodes = _compile_source(
+            expression.children[0], widths, None if tag == "logical-not" else expected)
         if tag == "negative":
             return ("sub", _constant(child_width, 0), child), child_width, nodes + 2
         if tag == "bit-not":
@@ -430,6 +433,11 @@ def _compile_source(expression: VExpr, widths: dict[str, int],
         return ("mux", _as_boolean(condition, condition_width), yes, no), yes_width, cn + yn + nn + 1
 
     left_expression, right_expression = expression.children
+    if tag in ("&&", "||"):
+        left, left_width, ln = _compile_source(left_expression, widths)
+        right, right_width, rn = _compile_source(right_expression, widths)
+        op = "and" if tag == "&&" else "or"
+        return (op, _as_boolean(left, left_width), _as_boolean(right, right_width)), 1, ln + rn + 1
     if left_expression.tag == "constant" and left_expression.children[0] is None and right_expression.tag != "constant":
         right, right_width, rn = _compile_source(right_expression, widths)
         left, left_width, ln = _compile_source(left_expression, widths, right_width)
@@ -440,9 +448,6 @@ def _compile_source(expression: VExpr, widths: dict[str, int],
         left, left_width, ln = _compile_source(left_expression, widths, expected)
         right_expected = left_width if right_expression.tag == "constant" and right_expression.children[0] is None else expected
         right, right_width, rn = _compile_source(right_expression, widths, right_expected)
-    if tag in ("&&", "||"):
-        op = "and" if tag == "&&" else "or"
-        return (op, _as_boolean(left, left_width), _as_boolean(right, right_width)), 1, ln + rn + 1
     if left_width != right_width:
         raise TranslationValidationError(f"source operand widths disagree for {tag}")
     mapping = {"+": "add", "-": "sub", "&": "and", "|": "or", "^": "xor"}

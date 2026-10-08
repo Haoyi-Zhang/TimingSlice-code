@@ -438,12 +438,14 @@ def compile_expr(e: Expr, widths: dict[str, int], expected: int | None = None) -
         return var(name), widths[name]
     if e.op == "const":
         width, value = e.args
+        if width is None and expected is not None and not 0 <= int(value) < (1 << expected):
+            raise FrontendError("unsized literal does not fit the supported context width")
         width = expected if width is None else width
         if width is None:
             width = max(1, int(value).bit_length())
         return const(width, int(value)), width
     if e.op in ("neg", "bnot", "lnot"):
-        a, aw = compile_expr(e.args[0], widths, expected)
+        a, aw = compile_expr(e.args[0], widths, None if e.op == "lnot" else expected)
         if e.op == "neg":
             return ["sub", const(aw, 0), a], aw
         if e.op == "bnot":
@@ -464,6 +466,10 @@ def compile_expr(e: Expr, widths: dict[str, int], expected: int | None = None) -
         return ["mux", _bool(c_ir, cw), y_ir, n_ir], yw
 
     a, b = e.args
+    if e.op in ("&&", "||"):
+        a_ir, aw = compile_expr(a, widths)
+        b_ir, bw = compile_expr(b, widths)
+        return (["and" if e.op == "&&" else "or", _bool(a_ir, aw), _bool(b_ir, bw)], 1)
     if a.op == "const" and a.args[0] is None and b.op != "const":
         b_ir, bw = compile_expr(b, widths)
         a_ir, aw = compile_expr(a, widths, bw)
@@ -475,8 +481,6 @@ def compile_expr(e: Expr, widths: dict[str, int], expected: int | None = None) -
         b_ir, bw = compile_expr(b, widths,
                                 aw if b.op == "const" and b.args[0] is None else expected)
     op = e.op
-    if op in ("&&", "||"):
-        return (["and" if op == "&&" else "or", _bool(a_ir, aw), _bool(b_ir, bw)], 1)
     if aw != bw:
         raise FrontendError(f"operand width mismatch for {op}: {aw} vs {bw}")
     if op == "+":

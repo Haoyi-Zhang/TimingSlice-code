@@ -15,7 +15,11 @@ expression, horizon, and candidate cut policy.
 - ANSI or old-style scalar/vector `input`, `output`, `wire`, and `reg`
   declarations with literal `[msb:0]` ranges.
 - Nonnegative sized binary/octal/decimal/hex literals and nonnegative unsized
-  decimal literals when a surrounding declared width is available.
+  decimal literals that fit the inferred or declared unsigned context width.
+  An unsized decimal that would require truncation is rejected, including in
+  comparisons; the frontend does not implement general Verilog operand
+  extension. Logical operators evaluate each operand's nonzero value before
+  combining them, without narrowing one operand to the other's width.
 - Identifiers, parentheses, unary `-`, `!`, and `~`; selected Boolean,
   comparison, addition, and subtraction operators; and ternary expressions.
 - `always @(posedge clock)` with nested or named `begin/end`, `if/else`, simple
