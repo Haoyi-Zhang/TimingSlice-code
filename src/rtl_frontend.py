@@ -302,8 +302,11 @@ def parse_case(stream: Stream, guard: Expr, out: list[Assignment]) -> None:
     def bind_default(expr: Expr) -> Expr:
         if expr is default_match:
             return expr_not(prior)
-        return Expr(expr.op, tuple(bind_default(a) if isinstance(a, Expr) else a
-                                  for a in expr.args))
+        args = tuple(bind_default(a) if isinstance(a, Expr) else a
+                     for a in expr.args)
+        # Keep unrelated immutable nodes, especially an enclosing case's
+        # default placeholder, so its later identity-based binding still works.
+        return expr if all(a is b for a, b in zip(args, expr.args)) else Expr(expr.op, args)
     for assignment in default_updates:
         assignment.guard = bind_default(assignment.guard)
 

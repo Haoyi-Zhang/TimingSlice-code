@@ -273,6 +273,9 @@ def _case(cursor: Cursor, outer: VExpr, updates: list[VUpdate]) -> None:
             return _not(previous)
         children = tuple(complete_fallback(child) if isinstance(child, VExpr) else child
                          for child in node.children)
+        # An inner fallback rewrite must not clone an enclosing placeholder.
+        if all(child is original for child, original in zip(children, node.children)):
+            return node
         return VExpr(node.tag, children)
     for update in fallback_updates:
         update.condition = complete_fallback(update.condition)

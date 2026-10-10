@@ -69,6 +69,11 @@ cross-block races. The pinned ten translations and historical trace data are
 unchanged. A current run counts 191 semantic units; historical test receipts
 remain historical rather than being relabeled as this run.
 
+`tests/nested_case_regression.py` is a standalone toy source-semantics check
+for nested cases with distinct target registers and default items before or
+after explicit labels. Run it with `python -B tests/nested_case_regression.py -v`.
+It is separate from the historical discovery inventory and public RTL campaign.
+
 `tests/successor_regression.py` separately runs four additional pure finite
 regression groups and is an explicit scientific-CI step. Its reference enumerates
 complete tiny input/cut prefixes without merging histories, checking preservation,

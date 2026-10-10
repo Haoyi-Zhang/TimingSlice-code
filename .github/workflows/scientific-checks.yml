@@ -40,6 +40,7 @@ jobs:
           python -B .github/scripts/check_repository.py
           python -B run-tests.py --out "$CHECK_OUTPUT/software-regression.json"
           python -B tests/successor_regression.py
+          python -B tests/nested_case_regression.py
           python -B tests/paper_data_regression.py
           python -B verify-retained.py --out "$CHECK_OUTPUT/retained-audit.json"
           python -B verify-release.py --out "$CHECK_OUTPUT/artifact-audit.json"
