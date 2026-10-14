@@ -21,6 +21,12 @@ from src import cases, checker, producer
 from tests import oracles
 
 
+def require(condition: bool, context) -> None:
+    """Keep finite scientific controls active under optimized Python."""
+    if not condition:
+        raise AssertionError(context)
+
+
 def write_json(path: Path, data) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(data, sort_keys=True, indent=2) + "\n")
@@ -54,22 +60,23 @@ def semantic_tests(models: list[dict]) -> int:
                     expected = oracles.hand_step(raw["id"], state, u, cut)
                     dp, ep = p.observe(state, u, cut)
                     dq, eq = q.frame(state, u, cut)
-                    assert (dp, p.advance(ep, cut)) == expected, (raw["id"], "producer semantics")
-                    assert (dq, q.next_state(eq, cut)) == expected, (raw["id"], "checker semantics")
+                    require((dp, p.advance(ep, cut)) == expected, (raw["id"], "producer semantics"))
+                    require((dq, q.next_state(eq, cut)) == expected, (raw["id"], "checker semantics"))
                     total += 1
     # Snapshot and independently imported checker properties.
     raw = copy.deepcopy(models[2])
     m = producer.Model(raw)
     independent = checker.Semantics(raw)
     raw["registers"][0]["init"] = 3
-    assert m.raw["registers"][0]["init"] == 0
-    assert independent.data["registers"][0]["init"] == 0
+    require(m.raw["registers"][0]["init"] == 0, "producer model must snapshot input")
+    require(independent.data["registers"][0]["init"] == 0, "checker model must snapshot input")
     tree = ast.parse((Path(__file__).parent / "src" / "checker.py").read_text())
     imported = []
     for node in ast.walk(tree):
         if isinstance(node, ast.Import): imported += [a.name for a in node.names]
         elif isinstance(node, ast.ImportFrom): imported.append(node.module or "")
-    assert not any(x.startswith(("src", "tests")) or "producer" in x for x in imported)
+    require(not any(x.startswith(("src", "tests")) or "producer" in x for x in imported),
+            "checker must not import producer or test semantics")
     try:
         checker.strict_pairs([("x", 0), ("x", 1)])
         raise AssertionError("duplicate JSON key accepted")
@@ -88,8 +95,8 @@ def retained_equation_regression(models: list[dict]) -> int:
     p, q = producer.Model(broken), checker.Semantics(broken)
     dp, ep = p.observe((0, 0), (1,), {})
     dq, eq = q.frame((0, 0), (1,), {})
-    assert (dp, p.advance(ep, {})) != expected
-    assert (dq, q.next_state(eq, {})) != expected
+    require((dp, p.advance(ep, {})) != expected, "producer retained-equation regression")
+    require((dq, q.next_state(eq, {})) != expected, "checker retained-equation regression")
     return 1
 
 
@@ -106,12 +113,17 @@ def semantic_operator_tests() -> int:
                     e = [name, ["const", width, a], ["const", width, b]]
                     pn = producer.parse(e, {})
                     qw, code = checker.compile_expression(e, {})
-                    assert pn.width == qw and producer.evaluate(pn, {}) == value and checker.execute(code, {}) == value
+                    produced = producer.evaluate(pn, {})
+                    checked = checker.execute(code, {})
+                    require(pn.width == qw and produced == value and checked == value,
+                            (width, a, b, name, "operator semantics"))
                     total += 1
             e = ["not", ["const", width, a]]
-            assert producer.evaluate(producer.parse(e, {}), {}) == ((~a) & mask)
+            produced = producer.evaluate(producer.parse(e, {}), {})
+            require(produced == ((~a) & mask), (width, a, "producer not"))
             _, code = checker.compile_expression(e, {})
-            assert checker.execute(code, {}) == ((~a) & mask)
+            checked = checker.execute(code, {})
+            require(checked == ((~a) & mask), (width, a, "checker not"))
             total += 1
     return total
 
@@ -119,7 +131,7 @@ def semantic_operator_tests() -> int:
 def check_bundle(raw: dict, b: dict, total: dict) -> dict:
     ans = checker.verify_bundle(raw, b, 100_000)
     add_work(total, "checker", ans["work"])
-    assert ans["accepted"], (raw["id"], ans)
+    require(ans["accepted"], (raw["id"], ans))
     return ans
 
 
@@ -131,7 +143,7 @@ def mutate_checks(models: dict[str, dict], bundles: dict, out: Path, total: dict
     def check(name, source_model, b, expected: bool):
         ans = checker.verify_bundle(source_model, b)
         add_work(total, "checker", ans["work"])
-        assert ans["accepted"] == expected, (name, ans)
+        require(ans["accepted"] == expected, (name, ans))
         rows.append({"mutation": name, "expected_accepted": expected,
                      "accepted": ans["accepted"], "reason": ans.get("reason", "valid certificate")})
 
@@ -183,11 +195,11 @@ def mutate_checks(models: dict[str, dict], bundles: dict, out: Path, total: dict
     b["preservation"]["frontiers"] = [copy.deepcopy(all_pairs) for _ in range(raw["horizon"] + 1)]
     check("sound-frontier-superset", raw, b, True)
     ans = checker.verify_bundle(source, original, 0)
-    assert not ans["accepted"] and ans["status"] == "unknown"
+    require(not ans["accepted"] and ans["status"] == "unknown", "checker zero-budget UNKNOWN")
     rows.append({"mutation": "checker-budget-zero", "expected_accepted": False,
                  "accepted": False, "reason": "UNKNOWN, not a proof verdict"})
     ans = producer.bundle(producer.Model(source), limit=0)
-    assert ans["status"] == "unknown"
+    require(ans["status"] == "unknown", "producer zero-budget UNKNOWN")
     rows.append({"mutation": "producer-budget-zero", "expected_accepted": False,
                  "accepted": False, "reason": "UNKNOWN, not a proof verdict"})
     return rows
@@ -199,11 +211,12 @@ def run(out: Path) -> dict:
     # Bind the readable stored fixtures to the exact generated experiment inputs.
     all_models = raw_controls + [raw for raw, _ in all_reductions]
     fixture_root = Path(__file__).resolve().parent / "cases"
-    assert {p.name for p in fixture_root.glob("*.json")} == {raw["id"] + ".json" for raw in all_models}
+    require({p.name for p in fixture_root.glob("*.json")} == {raw["id"] + ".json" for raw in all_models},
+            "stored fixture set differs from generated model set")
     for raw in all_models:
         stored = json.loads((fixture_root / (raw["id"] + ".json")).read_text(),
                             object_pairs_hook=checker.strict_pairs)
-        assert stored == raw, (raw["id"], "stored fixture and generator disagree")
+        require(stored == raw, (raw["id"], "stored fixture and generator disagree"))
     models = {m["id"]: m for m in raw_controls}
     total = {"producer": 0, "checker": 0, "closed_form_oracle": 0}
     units = semantic_tests(raw_controls)
@@ -217,7 +230,7 @@ def run(out: Path) -> dict:
         m = producer.Model(raw)
         for mode in ("first-hit", "waveform"):
             b = producer.bundle(m, mode)
-            assert b["status"] == "inclusion-minimal", (m.raw["id"], b["status"])
+            require(b["status"] == "inclusion-minimal", (m.raw["id"], b["status"]))
             add_work(total, "producer", b["work"])
             checked = check_bundle(raw, b, total)
             bundles[(raw["id"], mode)] = b
@@ -226,8 +239,9 @@ def run(out: Path) -> dict:
                 w = necessity["witness"]
                 oracle, count = oracles.exhaustive_witness(raw, set(w["retained"]), mode, w["time"])
                 total["closed_form_oracle"] += count
-                assert oracle is not None
-                assert all(oracle[k] == w[k] for k in ("time", "inputs", "cuts")), (raw["id"], w, oracle)
+                require(oracle is not None, (raw["id"], "missing closed-form witness"))
+                require(all(oracle[k] == w[k] for k in ("time", "inputs", "cuts")),
+                        (raw["id"], w, oracle))
                 witnesses += 1
             emitted = producer.Model(b["timing_model"])
             controls.append({"case": raw["id"], "observation": mode,
@@ -258,7 +272,7 @@ def run(out: Path) -> dict:
             total["closed_form_oracle"] += count
             pb = producer.Budget()
             answer = producer.search(m, keep, budget=pb)
-            assert answer["status"] == ("valid" if expected else "invalid"), (raw["id"], keep)
+            require(answer["status"] == ("valid" if expected else "invalid"), (raw["id"], keep))
             cert = answer["certificate"]
             meter = checker.Meter()
             if expected:
@@ -268,8 +282,10 @@ def run(out: Path) -> dict:
                 cert["predecessors"] = producer.predecessor_certificate(m, cert, pb)
                 checker.canonical(cm, cert, meter)
                 u, vals = witness
-                assert cert["time"] == 0 and tuple(cert["inputs"][0]) == u
-                assert tuple(cert["cuts"][0][n] for n in free) == vals
+                require(cert["time"] == 0 and tuple(cert["inputs"][0]) == u,
+                        (raw["id"], keep, "reduction witness time or input"))
+                require(tuple(cert["cuts"][0][n] for n in free) == vals,
+                        (raw["id"], keep, "reduction witness cut values"))
             add_work(total, "producer", pb.snapshot())
             add_work(total, "checker", meter.result())
             reductions.append({"case": raw["id"], "family": meta["family"],
@@ -284,7 +300,7 @@ def run(out: Path) -> dict:
         else:
             observed = any(len(k) <= meta["n"] for k in true_keeps)
             expected = oracles.quantified_choice(meta)
-        assert observed == expected, (raw["id"], "reduction theorem condition")
+        require(observed == expected, (raw["id"], "reduction theorem condition"))
         classes.append({"case": raw["id"], "family": meta["family"],
                         "expected_condition": expected, "observed_condition": observed})
     write_csv(out / "reduction_results.csv", reductions)
@@ -303,18 +319,20 @@ def run(out: Path) -> dict:
         ds, _ = z.observe((), ())
         da, _ = emitted.observe((), ())
         zero_relation.append({"retained": ";".join(sorted(keep)), "zero_fill_preserved": ds == da})
-    assert [x["zero_fill_preserved"] for x in zero_relation] == [True, False, False, True]
+    require([x["zero_fill_preserved"] for x in zero_relation] == [True, False, False, True],
+            "fixed-zero mechanism control")
     write_csv(out / "zero_fill_nonmonotonicity.csv", zero_relation)
     joint = producer.Model(models["joint-omission"])
     for keep, expected in [({"w:a"}, "valid"), ({"w:b"}, "valid"), (set(), "invalid")]:
         ans = producer.search(joint, keep)
         add_work(total, "producer", ans["work"])
-        assert ans["status"] == expected
+        require(ans["status"] == expected, ("joint-omission", sorted(keep), expected, ans["status"]))
     gap = bundles[("minimum-gap", "first-hit")]
-    assert gap["preservation"]["retained"] == ["w:b", "w:c"]
+    require(gap["preservation"]["retained"] == ["w:b", "w:c"],
+            "minimum-gap first-hit retained set")
     ans = producer.search(producer.Model(models["minimum-gap"]), {"w:a"})
     add_work(total, "producer", ans["work"])
-    assert ans["status"] == "valid"
+    require(ans["status"] == "valid", "minimum-gap alternate retained set")
     comparisons = []
     for t in range(models["post-completion"]["horizon"] + 1):
         comparisons.append({"cycle": t,
@@ -327,7 +345,7 @@ def run(out: Path) -> dict:
     m = producer.Model(raw)
     baseline = producer.search(m, set(m.candidates), "first-hit")
     add_work(total, "producer", baseline["work"])
-    assert baseline["status"] == "valid"
+    require(baseline["status"] == "valid", "unsliced first-hit baseline")
     pm = checker.Meter()
     checker.preservation(checker.Semantics(raw), baseline["certificate"], pm)
     add_work(total, "checker", pm.result())
@@ -335,7 +353,8 @@ def run(out: Path) -> dict:
     baseline_rows = [{"configuration": "unsliced-first-hit", "retained": len(m.candidates),
                       "frontier_entries": sum(len(f) for f in baseline["certificate"]["frontiers"]),
                       "preservation_obligations": pm.observations + pm.successors}]
-    assert [len(f) for f in baseline["certificate"]["frontiers"]] == [1, 2, 2, 0, 0]
+    require([len(f) for f in baseline["certificate"]["frontiers"]] == [1, 2, 2, 0, 0],
+            "unsliced first-hit frontier cardinalities")
     for mode in ("first-hit", "waveform"):
         row = next(r for r in controls if r["case"] == "post-completion" and r["observation"] == mode)
         baseline_rows.append({"configuration": "sliced-" + mode,
@@ -346,7 +365,7 @@ def run(out: Path) -> dict:
     # This is deliberately stricter than merely counting 928 top-level queries.
     total["closed_form_oracle"] += len(zero_relation)  # one paired observation per row
     work = sum(total.values())
-    assert work < 70_000, ("pilot would consume repair/reproduction reserve", total)
+    require(work < 70_000, ("pilot would consume repair/reproduction reserve", total))
     summary = {"pilot_status": "PASS", "research_gate": "HOLD",
         "public_rtl_modules": 0, "generated_control_models": len(raw_controls),
         "generated_reduction_models": len(all_reductions),
