@@ -23,6 +23,8 @@ def entries(text: str) -> list[tuple[str, str, str]]:
     result = []
     for index, match in enumerate(starts):
         end = starts[index + 1].start() if index + 1 < len(starts) else len(text)
+        if match.group(1).lower() == "ieeetranbstctl":
+            continue
         result.append((match.group(1).lower(), match.group(2), text[match.start():end]))
     return result
 
@@ -48,8 +50,8 @@ def main() -> int:
     parser.add_argument("--summary", type=Path, required=True)
     args = parser.parse_args()
     try:
-        tex = args.tex.read_text()
-        bib = args.bib.read_text()
+        tex = args.tex.read_text(encoding="utf-8")
+        bib = args.bib.read_text(encoding="utf-8")
         parsed = entries(bib)
         keys = [key for _, key, _ in parsed]
         require(len(keys) == len(set(keys)), "duplicate BibTeX key")
@@ -59,10 +61,11 @@ def main() -> int:
         require(cited <= set(keys), f"missing BibTeX entries: {sorted(cited - set(keys))}")
         require(set(keys) <= cited, f"uncited BibTeX entries: {sorted(set(keys) - cited)}")
 
-        with args.calibration.open(newline="") as handle:
+        with args.calibration.open(newline="", encoding="utf-8") as handle:
             calibrated = {row["bibkey"] for row in csv.DictReader(handle)}
         authoritative = {
             "zeng2024timing", "zeng2022architecture", "zeng2021state",
+            "vaneijk1998sequential",
         }
         rows = []
         for kind, key, body in parsed:
@@ -80,7 +83,8 @@ def main() -> int:
                 basis = "full_text_calibration_record"
                 status = "FULL_TEXT_CALIBRATED"
             elif key in authoritative:
-                basis = "publisher_or_authoritative_index_metadata"
+                basis = ("author_institution_publication_record" if key == "vaneijk1998sequential"
+                         else "publisher_or_authoritative_index_metadata")
                 status = "AUTHORITATIVE_METADATA_VERIFIED"
             else:
                 basis = "canonical_scholarly_metadata_and_manuscript_role_review"
@@ -97,11 +101,11 @@ def main() -> int:
                 "required_fields_complete": "yes",
                 "verification_status": status,
                 "verification_basis": basis,
-                "access_date": "2026-09-16",
+                "access_date": "2026-10-15" if key == "vaneijk1998sequential" else "2026-09-16",
             })
         require(len(rows) >= 55, "fewer than 55 bibliography rows")
         args.out.parent.mkdir(parents=True, exist_ok=True)
-        with args.out.open("w", newline="") as handle:
+        with args.out.open("w", newline="", encoding="utf-8") as handle:
             writer = csv.DictWriter(handle, fieldnames=list(rows[0]))
             writer.writeheader()
             writer.writerows(rows)
@@ -119,7 +123,7 @@ def main() -> int:
     except (OSError, BibliographyAuditError, csv.Error) as error:
         summary = {"status": "FAIL", "reason": str(error)}
     args.summary.parent.mkdir(parents=True, exist_ok=True)
-    args.summary.write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n")
+    args.summary.write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print(json.dumps(summary, indent=2, sort_keys=True))
     return 0 if summary["status"] == "PASS" else 1
 
