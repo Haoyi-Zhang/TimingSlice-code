@@ -230,7 +230,7 @@ def audit_paper(paper: Path, build_dir: Path | None = None) -> dict[str, Any]:
             "redundant paper.pdf remains beside the current main.pdf")
     require(tex_path.is_file() and bib_path.is_file() and pdf_path.is_file(),
             "paper source, bibliography, or PDF missing")
-    tex = re.sub(r"(?<!\\)%[^\n]*", "", tex_path.read_text(encoding="utf-8"))
+    tex = re.sub(r"(?<!\\)((?:\\\\)*)%[^\n]*", r"\1", tex_path.read_text(encoding="utf-8"))
     bib = bib_path.read_text(encoding="utf-8")
     build = paper if build_dir is None else build_dir
     require((build / "main.pdf").is_file(), "current build PDF missing")

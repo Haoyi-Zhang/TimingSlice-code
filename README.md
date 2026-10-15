@@ -60,13 +60,14 @@ python3 verify-release.py --project-root .. --paper-build ../paper \
   --out results/local-release-audit.json
 ```
 
-The software suite contains 42 methods, including two literal-width regressions
-and ten manuscript-release regressions. The latter check the current PDF,
+The software suite contains 45 methods, including two literal-width regressions
+and twelve manuscript-release regressions. The latter check the current PDF,
 duplicate-copy rejection, build/citation correspondence, font embedding, and
 the supported project layout without requiring private planning documents,
-and UTF-8 command output independently of the Windows locale.
-Three bibliography regressions check style-control exclusion, legitimate key
-handling, and the full UTF-8 generation path.
+UTF-8 command output independently of the Windows locale, and escaped-percent
+comment semantics.
+Four bibliography regressions check style-control exclusion, legitimate key
+handling, the full UTF-8 generation path, and active citations versus comments.
 Six source-semantics methods
 cover 78 state/input contexts, seven source/IR validations, and two rejections
 of multiple procedural drivers. They repair default-item selection independent

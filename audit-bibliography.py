@@ -50,7 +50,7 @@ def main() -> int:
     parser.add_argument("--summary", type=Path, required=True)
     args = parser.parse_args()
     try:
-        tex = args.tex.read_text(encoding="utf-8")
+        tex = re.sub(r"(?<!\\)((?:\\\\)*)%[^\n]*", r"\1", args.tex.read_text(encoding="utf-8"))
         bib = args.bib.read_text(encoding="utf-8")
         parsed = entries(bib)
         keys = [key for _, key, _ in parsed]

@@ -107,9 +107,30 @@ class CurrentPaperReleaseTests(unittest.TestCase):
         with patch.object(AUDIT, "command", self.command), self.assertRaisesRegex(AUDIT.ReleaseAuditError, "differs"):
             AUDIT.audit_paper(self.paper, build)
 
+    def test_separate_current_build_supplies_log_and_citation_products(self) -> None:
+        build = self.project / "isolated-build"
+        build.mkdir()
+        (build / "main.pdf").write_bytes((self.paper / "main.pdf").read_bytes())
+        for name in ("main.log", "main.aux", "main.bbl"):
+            (self.paper / name).rename(build / name)
+        with patch.object(AUDIT, "command", self.command):
+            self.assertTrue(AUDIT.audit_paper(self.paper, build)["current_build_pdf_matches"])
+        (build / "main.aux").write_text("\\citation{source0}\n", encoding="utf-8")
+        with patch.object(AUDIT, "command", self.command), self.assertRaisesRegex(AUDIT.ReleaseAuditError, "citations differ"):
+            AUDIT.audit_paper(self.paper, build)
+
     def test_stale_compiled_citations_are_rejected(self) -> None:
         (self.paper / "main.aux").write_text("\\citation{source0}\n", encoding="utf-8")
         with patch.object(AUDIT, "command", self.command), self.assertRaisesRegex(AUDIT.ReleaseAuditError, "citations differ"):
+            AUDIT.audit_paper(self.paper)
+
+    def test_tex_comment_escape_parity_preserves_live_citations(self) -> None:
+        original = (self.paper / "main.tex").read_text(encoding="utf-8")
+        (self.paper / "main.tex").write_text(original + "\n" + r"Text\\% comment \cite{missing}", encoding="utf-8")
+        with patch.object(AUDIT, "command", self.command):
+            self.assertEqual(AUDIT.audit_paper(self.paper)["cited_entries"], 56)
+        (self.paper / "main.tex").write_text(original + "\n" + r"Text\% active \cite{missing}", encoding="utf-8")
+        with patch.object(AUDIT, "command", self.command), self.assertRaisesRegex(AUDIT.ReleaseAuditError, "missing"):
             AUDIT.audit_paper(self.paper)
 
     def test_stale_compiled_bibliography_is_rejected(self) -> None:
