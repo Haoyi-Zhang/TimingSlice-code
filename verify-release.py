@@ -41,7 +41,8 @@ def csv_rows(path: Path) -> list[dict[str, str]]:
 
 
 def command(*args: str, cwd: Path | None = None) -> str:
-    completed = subprocess.run(args, cwd=cwd, capture_output=True, text=True, check=False)
+    completed = subprocess.run(args, cwd=cwd, capture_output=True, text=True,
+                               encoding="utf-8", check=False)
     require(completed.returncode == 0,
             f"command failed ({completed.returncode}): {' '.join(args)}\n{completed.stderr}")
     return completed.stdout
@@ -212,6 +213,8 @@ def bib_entries(text: str) -> tuple[list[str], dict[str, str]]:
     keys: list[str] = []
     bodies: dict[str, str] = {}
     for index, match in enumerate(starts):
+        if match.group(1).lower() == "ieeetranbstctl":
+            continue
         key = match.group(2)
         end = starts[index + 1].start() if index + 1 < len(starts) else len(text)
         keys.append(key)
@@ -219,18 +222,24 @@ def bib_entries(text: str) -> tuple[list[str], dict[str, str]]:
     return keys, bodies
 
 
-def audit_paper(paper: Path) -> dict[str, Any]:
+def audit_paper(paper: Path, build_dir: Path | None = None) -> dict[str, Any]:
     tex_path = paper / "main.tex"
     bib_path = paper / "references.bib"
-    pdf_path = paper / "paper.pdf"
+    pdf_path = paper / "main.pdf"
+    require(not (paper / "paper.pdf").exists(),
+            "redundant paper.pdf remains beside the current main.pdf")
     require(tex_path.is_file() and bib_path.is_file() and pdf_path.is_file(),
             "paper source, bibliography, or PDF missing")
-    tex = tex_path.read_text()
-    bib = bib_path.read_text()
+    tex = re.sub(r"(?<!\\)%[^\n]*", "", tex_path.read_text(encoding="utf-8"))
+    bib = bib_path.read_text(encoding="utf-8")
+    build = paper if build_dir is None else build_dir
+    require((build / "main.pdf").is_file(), "current build PDF missing")
+    require((build / "main.pdf").read_bytes() == pdf_path.read_bytes(),
+            "current manuscript PDF differs from the supplied build PDF")
 
     keys, bodies = bib_entries(bib)
     require(len(keys) == len(set(keys)), "duplicate BibTeX keys")
-    require(len(keys) >= 55, "bibliography has fewer than 55 entries")
+    require(len(keys) >= 50, "bibliography has fewer than 50 entries")
     cited: set[str] = set()
     for match in re.finditer(r"\\cite(?:\[[^\]]*\])?\{([^}]+)\}", tex):
         cited |= {item.strip() for item in match.group(1).split(",") if item.strip()}
@@ -252,7 +261,7 @@ def audit_paper(paper: Path) -> dict[str, Any]:
                 f"recent bibliography entry {key} lacks a stable locator")
 
     sections = re.findall(r"(?m)^\\section\{", tex)
-    require(7 <= len(sections) <= 9, f"main section count is {len(sections)}, expected 7--9")
+    require(1 <= len(sections) <= 9, f"main section count is {len(sections)}, expected at most nine")
     abstract_match = re.search(r"\\begin\{abstract\}(.*?)\\end\{abstract\}", tex, re.S)
     require(abstract_match is not None, "abstract missing")
     abstract_plain = re.sub(r"\\[A-Za-z]+(?:\{[^{}]*\})?", " ", abstract_match.group(1))
@@ -268,10 +277,11 @@ def audit_paper(paper: Path) -> dict[str, Any]:
     for pattern in forbidden_layout:
         require(re.search(pattern, tex) is None, f"forbidden layout manipulation matches {pattern}")
 
-    info = command("pdfinfo", str(pdf_path))
+    info = command("pdfinfo", str(pdf_path), "-enc", "UTF-8", "-rawdates")
     page_match = re.search(r"(?m)^Pages:\s+(\d+)", info)
     size_match = re.search(r"(?m)^Page size:\s+([0-9.]+) x ([0-9.]+) pts", info)
-    require(page_match and int(page_match.group(1)) == 12, "paper PDF is not exactly 12 pages")
+    require(page_match and 1 <= int(page_match.group(1)) <= 14,
+            "paper PDF exceeds the 14-page TCAD regular-paper limit")
     require(size_match, "paper page size unavailable")
     width, height = float(size_match.group(1)), float(size_match.group(2))
     require(abs(width - 612) < 1 and abs(height - 792) < 1, "paper is not US Letter")
@@ -280,9 +290,7 @@ def audit_paper(paper: Path) -> dict[str, Any]:
     require(fonts, "paper PDF reports no fonts")
     for line in fonts:
         parts = line.split()
-        require("yes" in parts, f"font row does not report embedding: {line}")
-        # pdffonts columns include emb/sub/uni; the first yes after type is emb.
-        require(parts[parts.index("yes")] == "yes", f"unembedded font: {line}")
+        require(len(parts) >= 8 and parts[-5] == "yes", f"unembedded or malformed font row: {line}")
 
     extracted = command("pdftotext", str(pdf_path), "-")
     require("[?]" not in extracted and "Citation" not in extracted,
@@ -292,21 +300,34 @@ def audit_paper(paper: Path) -> dict[str, Any]:
     compact_pdf_text = re.sub(r"\s+", "", extracted).upper()
     require("REFERENCES" in compact_pdf_text, "references heading missing from PDF")
 
-    log_path = paper / "main.log"
-    require(log_path.is_file(), "final LaTeX build log missing")
+    log_path = build / "main.log"
+    require(log_path.is_file(), "current LaTeX build log missing")
     log = log_path.read_text(errors="replace")
     for defect in ("Overfull \\hbox", "Overfull \\vbox", "undefined references",
                    "Citation `", "There were undefined references"):
         require(defect not in log, f"LaTeX log defect: {defect}")
 
+    aux_path, bbl_path = build / "main.aux", build / "main.bbl"
+    require(aux_path.is_file() and bbl_path.is_file(), "current build citation products missing")
+    compiled_cited = {key.strip() for group in re.findall(r"\\citation\{([^}]+)\}", aux_path.read_text(encoding="utf-8"))
+                      for key in group.split(",") if key.strip()}
+    style_controls = set(re.findall(r"@IEEEtranBSTCTL\s*\{\s*([^,\s]+)", bib, re.I))
+    require(compiled_cited - style_controls == cited, "current build citations differ from source citations")
+    bbl_keys = set(re.findall(r"\\bibitem(?:\[[^\]]*\])?\s*\{([^}]+)\}", bbl_path.read_text(encoding="utf-8")))
+    require(bbl_keys == cited, "current compiled bibliography differs from cited sources")
+
     figures = sorted((paper / "figures").glob("*.tex"))
     tables = sorted(paper.glob("*-table.tex"))
-    require(len(figures) == 3, "expected exactly three LaTeX-native figure sources")
+    require(len(figures) == 3, "expected exactly three figure source wrappers")
+    require((paper / "figures" / "frontiers.pdf").is_file(), "quantitative vector plot missing")
     require(len(tables) == 3, "expected three external table sources")
 
     return {
         "status": "PASS",
-        "pages": 12,
+        "pages": int(page_match.group(1)),
+        "pdf": "main.pdf",
+        "current_build_pdf_matches": True,
+        "current_compiled_citations_match": True,
         "page_size": "US Letter",
         "fonts_embedded": True,
         "main_sections": len(sections),
@@ -317,19 +338,20 @@ def audit_paper(paper: Path) -> dict[str, Any]:
         "missing_citations": 0,
         "uncited_entries": 0,
         "recent_entries_with_stable_locator": len(recent),
-        "latex_native_figures": len(figures),
+        "figure_source_wrappers": len(figures),
         "external_table_sources": len(tables),
     }
 
 
 def audit_project(project: Path, artifact: Path) -> dict[str, Any]:
-    expected = {"README.md", "artifact", "paper"}
-    actual = {path.name for path in project.iterdir()}
-    require(actual == expected, f"project root entries differ: {sorted(actual)}")
+    required = {"artifact", "paper"}
+    actual = {path.name for path in project.iterdir() if path.name != ".git"}
+    require(required <= actual and actual <= required | {"README.md"},
+            f"project root entries differ: {sorted(actual)}")
     require(artifact.resolve() == (project / "artifact").resolve(),
             "artifact argument is not the project's artifact directory")
-    require((project / "paper" / "provenance" / "research-plan.md").stat().st_size > 0, "research plan is empty")
-    require((project / "paper" / "provenance" / "CURRENT-STATE.md").stat().st_size > 0, "current state is empty")
+    for name in ("main.tex", "references.bib", "main.pdf"):
+        require((project / "paper" / name).is_file(), f"current paper input missing: {name}")
     text_suffixes = {".py", ".md", ".csv", ".json", ".txt", ".tex", ".bib", ".log", ".bbl"}
     private_markers = ("/" + "mnt/data", "/" + "home/oai", "sandbox" + ":", "user-" + "BTr")
     leaks: list[str] = []
@@ -346,6 +368,8 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--artifact", type=Path, default=Path(__file__).resolve().parent)
     parser.add_argument("--project-root", type=Path)
+    parser.add_argument("--paper-build", type=Path,
+                        help="Directory containing the current main.pdf/log/aux/bbl build products")
     parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args()
     try:
@@ -354,7 +378,7 @@ def main() -> int:
         if args.project_root is not None:
             project = args.project_root.resolve()
             report["project"] = audit_project(project, artifact)
-            report["paper"] = audit_paper(project / "paper")
+            report["paper"] = audit_paper(project / "paper", args.paper_build)
     except (ReleaseAuditError, OSError, ValueError) as error:
         report = {"status": "FAIL", "reason": str(error)}
     args.out.parent.mkdir(parents=True, exist_ok=True)

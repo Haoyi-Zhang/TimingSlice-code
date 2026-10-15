@@ -56,11 +56,15 @@ python3 audit-bibliography.py \
   --summary results/local-bibliography-audit.json
 python3 verify-paper-data.py --project-root .. \
   --out results/local-paper-data-audit.json
-python3 verify-release.py --project-root .. \
+python3 verify-release.py --project-root .. --paper-build ../paper \
   --out results/local-release-audit.json
 ```
 
-The software suite contains 29 methods, including two literal-width regressions.
+The software suite contains 39 methods, including two literal-width regressions
+and ten manuscript-release regressions. The latter check the current PDF,
+duplicate-copy rejection, build/citation correspondence, font embedding, and
+the supported project layout without requiring private planning documents,
+and UTF-8 command output independently of the Windows locale.
 Six source-semantics methods
 cover 78 state/input contexts, seven source/IR validations, and two rejections
 of multiple procedural drivers. They repair default-item selection independent
@@ -84,7 +88,7 @@ every omitted-wire/next-register valuation and charges every observation and
 successor. Final and stopped first-hit branches do not evaluate a successor;
 failed edge charges precede evaluation. No shared producer cache, changed proof
 obligation, new workload guarantee or measured speedup is claimed. These tests
-are separate from the 29-method suite and retained campaign receipts; assertions
+are separate from the software suite and retained campaign receipts; assertions
 remain enabled.
 
 `tests/paper_data_regression.py` is a separate eight-method pure static-gate
