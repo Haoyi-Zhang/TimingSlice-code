@@ -120,4 +120,5 @@ The local helper runs have a 45-second external wall limit and preserve their
 temporary evidence. They do not exercise POSIX CLI resource limits. The prepared
 Ubuntu 24.04 workflow encloses the complete scientific command group in a
 240-second wall bound with 1 GiB virtual memory and 180 CPU seconds per process;
-its actual remote outcome remains unmeasured until it runs.
+current remote outcomes must be checked against the exact commit's workflow run,
+separately from these retained local observations.

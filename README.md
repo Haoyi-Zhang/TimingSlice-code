@@ -18,9 +18,12 @@ are not proof-assistant mechanized.
 No package installation, solver, simulator, GPU, network access, API, or file
 outside this repository is required for the finite scientific runs. Paper-data
 and full-project audits additionally require the companion `paper/` directory.
-Use Python 3 on a Unix-like system with
-`resource` and `SIGALRM`; do not use Python `-O` because the assertions are
-intentional. Output directories must be absent or empty.
+Use CPython 3.12, as in CI. The campaign runners require a Unix-like system with
+`resource` and `SIGALRM`. The static audits, software suite, and direct checker
+also run on Windows (use `python` instead of `python3` where appropriate).
+Keep assertions enabled; do not use Python `-O`. Campaign output directories
+must be absent or empty. Use fresh external output paths to preserve retained
+results; audit and test receipt files can otherwise be overwritten.
 
 ```sh
 # Static closure audit of retained core and public generation evidence
@@ -43,12 +46,20 @@ and `accepted: true` for the direct checker replay. Checker exit codes are 0
 accepted, 1 rejected, and 2 unknown. Too little work returns UNKNOWN rather than
 a convenient verdict.
 
-The standard-library software regression suite and release audits are:
+The standard-library software suite and standalone audits need no sibling paper:
 
 ```sh
 python3 run-tests.py --out results/local-software-regression.json
 python3 -B tests/successor_regression.py
 python3 -B tests/paper_data_regression.py
+python3 verify-release.py --out results/local-artifact-audit.json
+```
+
+The following bibliography, paper-data, and full-project release audits additionally
+require the companion `../paper/` sources and built PDF. They are not prerequisites
+for the standalone commands above:
+
+```sh
 python3 audit-bibliography.py \
   --tex ../paper/main.tex --bib ../paper/references.bib \
   --calibration literature-calibration.csv \
@@ -110,7 +121,7 @@ it runs the current software suite, retained audits, full finite core campaign,
 public replay, and direct checker under Ubuntu 24.04. Its scientific command
 group has a 240-second wall timeout, 180-second per-process CPU limit, and 1 GiB
 per-process virtual-memory limit. Raw output is uploaded even after failure.
-The completed Ubuntu 24.04/Python 3.12 run `37439368517` at head
+The historical Ubuntu 24.04/Python 3.12 run `37439368517` at head
 `d3e25e818f2abf6171de9aaee113d1410c9b2844` passes this workflow and the
 repository-integrity check. That recorded run passes all 27 methods (191 semantic
 units, 0.093 suite seconds). All 37 core result files, ten translations and ten

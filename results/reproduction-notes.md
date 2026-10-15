@@ -7,9 +7,10 @@ standalone repository root before the following commands were executed. No file
 outside that root was read by the scientific programs. The command output path
 was `results/local`; its resulting contents were copied, without scientific
 re-execution, to the retained `results/clean-reproduction` directory. The
-scientific source, tests, runner, and fixtures in the delivered repository are
-byte-for-byte the same as the clean execution inputs; later edits were to
-explanations, proof presentation, and packaging only.
+receipts describe that historical execution snapshot, not a byte-for-byte
+certification of the current source. Later source-semantics and checker changes
+have separate regression records; the current commands and scope are in
+`../README.md`. The retained inputs, outputs, and measurements below are unchanged.
 
 ```sh
 python3 reproduce.py --out results/local
@@ -139,9 +140,12 @@ also exits zero. Its retained command is:
 ```sh
 python3 rtl-pilot.py \
   --mode replay \
-  --retained results/rtl-pilot \
-  --out results/clean-rtl-replay
+  --bundle-dir results/rtl-pilot/bundles \
+  --out results/local-rtl-replay
 ```
+
+Choose an absent or empty output directory. The example uses a new location
+rather than overwriting the retained `results/clean-rtl-replay/` evidence.
 
 The replay verifies all ten exact blobs/translations, all 4,965 samples, and all
 four retained bundles in 5,803 semantic units. `clean-rtl-replay/run.json` records
